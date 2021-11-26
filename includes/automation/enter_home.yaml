@@ -1,0 +1,24 @@
+- alias: 02_enter_home
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door_entry
+      from: 'off' 
+      to: 'on'  
+  condition:
+    condition: time
+    after: '09:00:00'
+    before: '22:00:00'
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      # - sat
+      # - sun
+  action:
+    - service: script.notify
+      data:
+        message: Открыта входная дверь
+    - delay: 00:00:05
+    - service: script.photo_xiaofang2

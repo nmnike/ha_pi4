@@ -1,0 +1,202 @@
+# CUSTOM COMPONENT https://github.com/Anonym-tsk/home-assistant-components
+# Xiaomi Plug Power Sensor - добавляет сенсор с текущим потреблением к розеткам xiaomi, а также чинит долгое обновление load_power и in_use розеток
+
+# sensor:
+#   - platform: xiaomi_plug_power
+
+
+# ------------------------------------------------------------------------------
+# - Потребление электричества
+# ------------------------------------------------------------------------------
+  
+# Розетка увлажнитель
+  - platform: template
+    sensors:
+      plug_1_load:
+        value_template: "{{ state_attr('switch.plug_1', 'load_power') }}"
+        icon_template: mdi:power-plug
+        unit_of_measurement: 'Вт'
+      plug_1_today_money:
+        friendly_name: "Стоимость за день"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_1_today.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_1_yesterday_money:
+        friendly_name: "Стоимость за прошлый день"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_1_yesterday.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_1_week_money:
+        friendly_name: "Стоимость за неделю"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_1_week.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_1_lastweek_money:
+        friendly_name: "Стоимость за прошлую неделю"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_1_lastweek.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_1_month_money:
+        friendly_name: "Стоимость за месяц"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_1_month.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_1_lastmonth_money:
+        friendly_name: "Стоимость за прошлый месяц"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_1_lastweek.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+
+  - platform: mqtt
+    state_topic: "power/plug_1/today"
+    name: 'plug_1_today'
+    unit_of_measurement: 'кВт⋅ч'
+  - platform: mqtt
+    state_topic: "power/plug_1/yesterday"
+    name: 'plug_1_yesterday'
+    unit_of_measurement: 'кВт⋅ч'  
+  - platform: mqtt
+    state_topic: "power/plug_1/week"
+    name: 'plug_1_week'
+    unit_of_measurement: 'кВт⋅ч'
+  - platform: mqtt
+    state_topic: "power/plug_1/lastweek"
+    name: 'plug_1_lastweek'
+    unit_of_measurement: 'кВт⋅ч'  
+  - platform: mqtt
+    state_topic: "power/plug_1/month"
+    name: 'plug_1_month'
+    unit_of_measurement: 'кВт⋅ч'
+  - platform: mqtt
+    state_topic: "power/plug_1/lastmonth"
+    name: 'plug_1_lastmonth'
+    unit_of_measurement: 'кВт⋅ч'
+  
+
+# Розетка Комп
+  - platform: template
+    sensors:
+      plug_comp_load:
+        value_template: "{{ state_attr('switch.plug_comp', 'load_power') }}"
+        icon_template: mdi:power-plug
+        unit_of_measurement: 'Вт'
+      plug_comp_today_money:
+        friendly_name: "Стоимость за день"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_comp_today.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_comp_yesterday_money:
+        friendly_name: "Стоимость за прошлый день"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_comp_yesterday.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_comp_week_money:
+        friendly_name: "Стоимость за неделю"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_comp_week.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_comp_lastweek_money:
+        friendly_name: "Стоимость за прошлую неделю"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_comp_lastweek.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_comp_month_money:
+        friendly_name: "Стоимость за месяц"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_comp_month.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_comp_lastmonth_money:
+        friendly_name: "Стоимость за прошлый месяц"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_comp_lastweek.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+
+  - platform: mqtt
+    state_topic: "power/plug_comp/today"
+    name: 'plug_comp_today'
+    unit_of_measurement: 'кВт⋅ч'
+  - platform: mqtt
+    state_topic: "power/plug_comp/yesterday"
+    name: 'plug_comp_yesterday'
+    unit_of_measurement: 'кВт⋅ч'  
+  - platform: mqtt
+    state_topic: "power/plug_comp/week"
+    name: 'plug_comp_week'
+    unit_of_measurement: 'кВт⋅ч'
+  - platform: mqtt
+    state_topic: "power/plug_comp/lastweek"
+    name: 'plug_comp_lastweek'
+    unit_of_measurement: 'кВт⋅ч'  
+  - platform: mqtt
+    state_topic: "power/plug_comp/month"
+    name: 'plug_comp_month'
+    unit_of_measurement: 'кВт⋅ч'
+  - platform: mqtt
+    state_topic: "power/plug_comp/lastmonth"
+    name: 'plug_comp_lastmonth'
+    unit_of_measurement: 'кВт⋅ч'
+
+
+
+# Розетка Гирлянда
+  - platform: template
+    sensors:
+      plug_2_load:
+        value_template: "{{ state_attr('switch.plug_2', 'load_power') }}"
+        icon_template: mdi:power-plug
+        unit_of_measurement: 'Вт'
+      plug_2_today_money:
+        friendly_name: "Стоимость за день"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_2_today.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_2_yesterday_money:
+        friendly_name: "Стоимость за прошлый день"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_2_yesterday.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_2_week_money:
+        friendly_name: "Стоимость за неделю"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_2_week.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_2_lastweek_money:
+        friendly_name: "Стоимость за прошлую неделю"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_2_lastweek.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_2_month_money:
+        friendly_name: "Стоимость за месяц"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_2_month.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+      plug_2_lastmonth_money:
+        friendly_name: "Стоимость за прошлый месяц"
+        unit_of_measurement: 'руб'
+        icon_template: mdi:currency-rub
+        value_template: "{{ ((states.sensor.plug_2_lastweek.state | float ) * (states.input_number.tariff_elec_allday.state | float )) | round(3) }}"
+
+  - platform: mqtt
+    state_topic: "power/plug_2/today"
+    name: 'plug_2_today'
+    unit_of_measurement: 'кВт⋅ч'
+  - platform: mqtt
+    state_topic: "power/plug_2/yesterday"
+    name: 'plug_2_yesterday'
+    unit_of_measurement: 'кВт⋅ч'  
+  - platform: mqtt
+    state_topic: "power/plug_2/week"
+    name: 'plug_2_week'
+    unit_of_measurement: 'кВт⋅ч'
+  - platform: mqtt
+    state_topic: "power/plug_2/lastweek"
+    name: 'plug_2_lastweek'
+    unit_of_measurement: 'кВт⋅ч'  
+  - platform: mqtt
+    state_topic: "power/plug_2/month"
+    name: 'plug_2_month'
+    unit_of_measurement: 'кВт⋅ч'
+  - platform: mqtt
+    state_topic: "power/plug_2/lastmonth"
+    name: 'plug_2_lastmonth'
+    unit_of_measurement: 'кВт⋅ч'

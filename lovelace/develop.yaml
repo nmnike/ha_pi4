@@ -1,0 +1,65 @@
+title: Разработка
+id: Developer
+icon: mdi:developer-board
+cards:
+
+  - type: vertical-stack
+    cards:
+
+    # - type: markdown
+    #   content: >
+    #       #### GIT
+    
+    # - type: entities
+    #   show_header_toggle: false
+    #   entities:
+    #     - input_text.commit_text
+    #     - entity: script.update_github
+    #       tap_action: 
+    #         action: toggle
+    #       name: Закомитить
+    #       icon: mdi:github-circle
+    
+    - type: markdown
+      content: >
+          #### ТЕСТ
+
+    - type: entities
+      # title: Настройки
+      show_header_toggle: false
+      entities:
+        - input_select.development
+        - input_select.log_level
+        - input_boolean.tv
+        - input_number.volume
+    
+    - type: markdown
+      content: >
+          #### Скрипты
+    - type: custom:auto-entities
+      show_empty: false
+      card:
+        type: entities
+        show_header_toggle: false
+      filter:
+        include:
+          - entity_id: script.*
+    
+  - type: vertical-stack
+    cards:      
+
+    - type: markdown
+      content: >
+          #### Автоматизация
+    - type: custom:auto-entities
+      show_empty: false
+      card:
+        type: entities
+        show_header_toggle: false
+      filter:
+        include:
+          - entity_id: automation.*
+        exclude:
+          - entity_id: automation.00_power*
+          # - state: 'off'
+

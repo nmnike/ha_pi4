@@ -1,0 +1,53 @@
+# Menu_Restart
+
+- alias: Restart restart
+  trigger:
+    platform: state
+    entity_id: input_select.development
+    to: "Restart HA"
+  action:
+    service: homeassistant.restart
+    
+- alias: Restart automation
+  trigger:
+    platform: state
+    entity_id: input_select.development
+    to: "Restart Automation"
+  action:
+    service: automation.reload
+    
+- alias: Restart group
+  trigger:
+    platform: state
+    entity_id: input_select.development
+    to: "Restart Group"
+  action:
+    service: group.reload
+    
+- alias: Reloading Customize
+  trigger:
+    platform: state
+    entity_id: input_select.development
+    to: "Reloading Customize"
+  action:
+    service: homeassistant.reload_core_config
+    
+- alias: Reloading Scripts
+  trigger:
+    platform: state
+    entity_id: input_select.development
+    to: "Reloading Scripts"
+  action:
+    service: script.reload
+
+
+# Log_level
+ 
+- alias: Log Level
+  trigger:
+    platform: state
+    entity_id: input_select.log_level
+  action:
+    service: logger.set_level
+    data_template:
+      homeassistant.components: "{{ trigger.to_state.state }}"

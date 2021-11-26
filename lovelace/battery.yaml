@@ -1,0 +1,88 @@
+title: Уровень батарей
+id: battery
+icon: mdi:car-battery
+cards:
+      
+  # - type: vertical-stack
+  #   cards:
+    
+    # - type: markdown
+    #   content: >
+    #       #### Уровень заряда
+
+    # - type: entities
+    #   show_header_toggle: false
+    #   entities:          
+    #     - entity: sensor.battery_temperature_bathroom
+    #     - entity: sensor.battery_temperature_bedroom
+    #     - entity: sensor.battery_temperature_livingroom
+    #     - entity: sensor.battery_switch_livingroom
+    #     - entity: sensor.battery_switch_kitchen
+    #     - entity: sensor.battery_switch_doorbell
+    #     - entity: sensor.battery_door_entry
+    #     - entity: sensor.battery_window_livingroom
+    #     - entity: sensor.battery_window_kitchen
+    #     - entity: sensor.battery_window_bedroom
+    #     - entity: sensor.battery_motion_sensor_lobby
+    #     - entity: sensor.battery_motion_sensor_livingroom
+    #     - entity: sensor.battery_motion_sensor_kitchen
+    #     - entity: sensor.battery_cube_main
+    #     - entity: sensor.battery_switch2
+  
+  - type: vertical-stack
+    cards:
+
+    - type: markdown
+      content: >
+          #### Сенсоры менее 30% заряда
+    - type: custom:auto-entities
+      show_empty: false
+      card:
+        type: entities
+        show_header_toggle: false
+      filter:
+        include:
+          - entity_id: sensor.battery*
+        exclude:
+          - state: '> 30.0'
+  
+  - type: vertical-stack
+    cards:
+
+    - type: markdown
+      content: >
+          #### Уровень заряда
+    - type: custom:auto-entities
+      card:
+        type: entities
+        show_header_toggle: false
+      filter:
+        include:
+          - entity_id: sensor.battery*
+      show_empty: false
+      sort: 
+        method: state
+        numeric: true
+
+  # - type: vertical-stack
+  #   cards:
+
+  #   - type: markdown
+  #     content: >
+  #         #### Уровень заряда
+  #   - type: custom:auto-entities
+  #     show_empty: false
+  #     card:
+  #       type: entities
+  #       show_header_toggle: false
+  #     filter:
+  #       include:
+  #         - entity_id: sensor.battery*
+          # - entity_id: binary_sensor.motion_sensor*battery
+          # - entity_id: binary_sensor.window*battery
+          # - entity_id: .*battery
+        #exclude:
+          # - entity_id: sensor.humidity*
+          # - entity_id: sensor.pressure*
+          # - state: "100.0"
+

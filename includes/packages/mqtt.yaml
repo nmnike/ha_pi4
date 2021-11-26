@@ -1,0 +1,19 @@
+### MQTT ###
+# https://www.home-assistant.io/components/mqtt/
+mqtt:
+  broker: !secret ip_mqtt
+  port: 1883
+  client_id: home-assistant
+  keepalive: 60
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  birth_message:
+    topic: 'hass/status'
+    payload: 'online'
+    qos: 1
+    retain: true
+  will_message:
+    topic: 'hass/status'
+    payload: 'offline'
+    qos: 1
+    retain: true

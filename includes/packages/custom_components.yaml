@@ -1,0 +1,25 @@
+####################################################
+#             Custom components                    #
+####################################################
+# sensor:  
+#   - platform: attributes
+#     friendly_name: "Batteries"
+#     attribute: battery_level
+#     unit_of_measurement: "%"
+#     entities:
+#       - binary_sensor.door_entry
+      
+  # - platform: attributes
+  #   friendly_name: "Last changed"
+  #   attribute: last_triggered
+  #   icon: 'mdi:clock'
+  #   time_format: '%e %B - %H:%M:%S'
+  #   entities:
+  #     - automation.temp_changed
+
+
+# input_label:
+#   door_entry_binary_sensor:
+#   temperature_bedroom_sensor:
+
+# battery_state:

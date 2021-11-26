@@ -1,0 +1,125 @@
+# # https://www.home-assistant.io/components/xiaomi_aqara/
+
+# Дверной звонок
+- alias: doorbell
+  # id: doorbell
+  initial_state: 'off'
+  trigger:
+    platform: event
+    event_type: click
+    event_data:
+      entity_id: binary_sensor.switch_doorbell
+      click_type: single
+      # click_type: double
+      # click_type: long_click_press
+  condition:
+    condition: time
+    after: '07:30:00'
+    before: '22:00:00'
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+  action:
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway_mac
+        ringtone_id: 10
+        ringtone_vol: 60 #The volume in percent
+    - service: script.notify
+      data:
+        message: Звонок в дверь
+
+- alias: doorbell_early
+  initial_state: 'off'
+  trigger:
+    platform: event
+    event_type: click
+    event_data:
+      entity_id: binary_sensor.switch_doorbell
+      click_type: single
+  condition:
+    condition: time
+    before: '07:30:00'
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+  action:
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway_mac
+        ringtone_id: 10
+        ringtone_vol: 10 #The volume in percent
+    - service: script.notify
+      data:
+        message: Звонок в дверь (ранним утром)
+
+- alias: doorbell_late
+  initial_state: 'on'
+  trigger:
+    platform: event
+    event_type: click
+    event_data:
+      entity_id: binary_sensor.switch_doorbell
+      click_type: single
+  condition:
+    condition: time
+    after: '22:00:00'
+    weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+      - sat
+      - sun
+  action:
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway_mac
+        ringtone_id: 10
+        ringtone_vol: 10 #The volume in percent
+    - service: script.notify
+      data:
+        message: Звонок в дверь (поздним вечером)        
+
+# - alias: doorbell_2
+#   initial_state: 'on'
+#   trigger:
+#     platform: event
+#     event_type: click
+#     event_data:
+#       entity_id: binary_sensor.switch_doorbell
+#       # click_type: single
+#       click_type: double
+#       # click_type: long_click_press
+#   condition:
+#     condition: time
+#     after: '07:30:00'
+#     before: '22:00:00'
+#     weekday:
+#       - mon
+#       - tue
+#       - wed
+#       - thu
+#       - fri
+#       - sat
+#       - sun
+#   action:
+#     - service: xiaomi_aqara.play_ringtone
+#       data:
+#         gw_mac: !secret xiaomi_gateway_mac
+#         ringtone_id: 10
+#         ringtone_vol: 10 #The volume in percent
+#     - service: script.notify
+#       data:
+#         message: Звонок в дверь (2х нажатие)

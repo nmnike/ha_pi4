@@ -1,0 +1,71 @@
+# Последние состояния датчиков
+
+## Запись последнего открытия двери
+- alias: 01_enter_time
+  initial_state: true
+  trigger:
+## Открытие входной двери
+   platform: state
+   entity_id: binary_sensor.door_entry
+   from: 'off'
+   to: 'on'
+  action: 
+    - service: mqtt.publish
+      data_template:
+        topic: "binary_sensor/door_entry"
+        payload: "{{ states('sensor.time_date')}}"
+        retain: true
+
+## Запись последнего движения в прихожей
+- alias: 01_enter_motion_time
+  initial_state: true
+  trigger:
+## Движение в прихожей
+  - platform: event
+    event_type: xiaomi_aqara.motion
+    event_data:
+      entity_id: binary_sensor.motion_sensor_lobby
+  action: 
+  - service: mqtt.publish
+    data_template:
+      topic: "binary_sensor/lobby"
+      payload: "{{ states('sensor.time_date')}}"
+      retain: true
+
+
+# - alias: door_entry_last_change
+#   trigger:
+#     entity_id: binary_sensor.door_entry
+#     platform: state
+#     to: 'on'
+#   action:
+#     - service: input_datetime.set_datetime
+#       entity_id: input_datetime.door_entry_last
+#       data_template:
+#         # time: '{{ states.sensor.time.state }}'
+#         time: '{% if states.sensor.time.state %}{{ states.sensor.time.state }}{% endif %}'
+#         # warnings: Off
+
+# - alias: window_livingroom_last_change
+#   trigger:
+#     entity_id: binary_sensor.window_livingroom
+#     platform: state
+#     to: 'on'
+#   action:
+#     - service: input_datetime.set_datetime
+#       entity_id: input_datetime.window_livingroom_last
+#       data_template:
+#         time: '{% if states.sensor.time.state %}{{ states.sensor.time.state }}{% endif %}'
+#         # time: "{{ as_timestamp(now()) | timestamp_custom('%H:%M',True) }}"
+
+# - alias: window_bedroom_last_change
+#   trigger:
+#     entity_id: binary_sensor.window_bedroom
+#     platform: state
+#     to: 'on'
+#   action:
+#     - service: input_datetime.set_datetime
+#       entity_id: input_datetime.window_bedroom_last
+#       data_template:
+#         time: '{% if states.sensor.time.state %}{{ states.sensor.time.state }}{% endif %}'
+#         # time: "{{ as_timestamp(now()) | timestamp_custom('%H:%M',True) }}"

@@ -1,0 +1,381 @@
+###################################################
+#                    Customize                     #
+####################################################
+
+# https://home-assistant.io/docs/configuration/customizing-devices/
+# https://github.com/andrey-git/home-assistant-custom-ui/blob/master/docs/features.md#template-attributes
+
+
+binary_sensor.switch_158d00026b7863:
+  friendly_name: Кнопка
+
+binary_sensor.updater:
+  friendly_name: Обновление
+
+# ШЛЮЗ
+#Светильники
+light.gateway_light:
+  friendly_name: Шлюз ночник
+  icon: mdi:star-circle-outline
+
+#Сенсоры
+sensor.illumination_gateway:
+  friendly_name: Шлюз освещенность
+  device_class: illuminance
+  
+sensor.illumination_kitchen: 
+  friendly_name: Кухня освещенность
+  device_class: illuminance
+
+
+# # LED
+# light.led_living_room:
+#   friendly_name: LED гостиная
+#   icon: mdi:led-strip
+
+# light.led_kitchen:
+#   friendly_name: LED кухня
+#   icon: mdi:led-strip  
+
+
+# ОКНА И ДВЕРИ
+
+# door_entry
+binary_sensor.door_entry: 
+  friendly_name: Входная дверь
+  device_class: door
+sensor.battery_door_entry: 
+  friendly_name: Входная дверь
+
+# livingroom
+binary_sensor.window_livingroom:
+  friendly_name: Окно гостиная
+  device_class: window 
+sensor.battery_window_livingroom: 
+  friendly_name: Окно гостиная
+
+# bedroom  
+binary_sensor.window_bedroom:
+  friendly_name: Окно спальня
+  device_class: window 
+sensor.battery_window_bedroom: 
+  friendly_name: Окно спальня
+
+# kitchen
+binary_sensor.window_kitchen:
+  friendly_name: Окно кухня
+  device_class: window 
+sensor.battery_window_kitchen: 
+  friendly_name: Окно кухня
+
+
+# binary_sensor.window_livingroom: 
+#   friendly_name: Окно гостиная  
+#   # icon_color: blue
+#   show_last_changed: true
+#   # extra_data_template: >
+#   #   ${entities['input_datetime.window_livingroom_last'].attributes.hour}:${entities['input_datetime.window_livingroom_last'].attributes.minute}
+#   #   (${entities['sensor.window_livingroom_last_ago'].state} назад)
+  
+
+
+# # ДД
+binary_sensor.motion_sensor_livingroom: 
+  friendly_name: ДД гостиная
+sensor.battery_motion_sensor_livingroom: 
+  friendly_name: ДД гостиная
+
+binary_sensor.motion_sensor_lobby: 
+  friendly_name: ДД прихожая
+sensor.battery_motion_sensor_lobby: 
+  friendly_name: ДД прихожая  
+
+binary_sensor.motion_sensor_kitchen: 
+  friendly_name: ДД кухня
+sensor.battery_motion_sensor_kitchen: 
+  friendly_name: ДД кухня  
+
+
+# # РОЗЕТКИ
+switch.plug_comp: 
+  friendly_name: Розетка 1
+  device_class: plug  
+  icon: mdi:power
+
+switch.plug_1: 
+  friendly_name: Розетка 2
+  device_class: plug  
+  icon: mdi:power
+
+switch.plug_2: 
+  friendly_name: Розетка 3
+  device_class: plug  
+  icon: mdi:power
+
+
+
+
+# ТЕМПЕРАТУРА И ВЛАЖНОСТЬ
+
+#livingroom
+sensor.temperature_livingroom: 
+  friendly_name: Температура гостиная 
+  device_class: temperature
+
+sensor.battery_temperature_livingroom: 
+  friendly_name: Температура гостиная
+
+sensor.humidity_livingroom: 
+  friendly_name: Влажность гостиная
+  device_class: humidity
+
+sensor.pressure_livingroom: 
+  friendly_name: Давление гостиная
+  # device_class: pressure
+
+#bedroom
+sensor.temperature_bedroom: 
+  friendly_name: Температура спальня
+  device_class: temperature
+
+sensor.battery_temperature_bedroom: 
+  friendly_name: Температура спальня
+
+sensor.humidity_bedroom: 
+  friendly_name: Влажность спальня
+  device_class: humidity
+
+
+#bathroom
+sensor.temperature_bathroom: 
+  friendly_name: Температура ванная
+  device_class: temperature
+
+sensor.battery_temperature_bathroom: 
+  friendly_name: Температура ванная
+
+sensor.humidity_bathroom: 
+  friendly_name: Влажность ванная
+  device_class: humidity
+
+sensor.pressure_bathroom: 
+  friendly_name: Давление ванная
+  device_class: pressure
+
+
+
+
+# КНОПКИ
+binary_sensor.switch_livingroom: 
+  friendly_name: Кнопка гостиная
+sensor.battery_switch_livingroom: 
+  friendly_name: Кнопка гостиная 
+
+binary_sensor.switch_kitchen: 
+  friendly_name: Кнопка кухня
+sensor.battery_switch_kitchen: 
+  friendly_name: Кнопка кухня
+  
+binary_sensor.switch_doorbell: 
+  friendly_name: Кнопка дверной звонок
+sensor.battery_switch_doorbell: 
+  friendly_name: Кнопка дверной звонок
+
+binary_sensor.switch2: 
+  friendly_name: Кнопка 2
+sensor.battery_switch2: 
+  friendly_name: Кнопка 2 
+
+# КУБ
+binary_sensor.cube_main: 
+  friendly_name: Куб
+sensor.battery_cube_main: 
+  friendly_name: Куб 
+
+
+# # TV
+# media_player.kdl43w808c: 
+#   friendly_name: Google Cast Sony TV
+
+
+# # СИСТЕМНАЯ ИНФОРМАЦИЯ
+# sensor.cpu_temperature:
+#  friendly_name: Температура RaspberryPi
+# sensor.latest_version:
+#  friendly_name: Новая версия HA
+# sensor.installed_version:
+#  friendly_name: Установленная версия HA
+# sensor.online_custom:
+#  friendly_name: HA работает
+# sensor.online:
+#  hidden: true
+# sensor.processor_use:
+#  friendly_name: Загрузка процессора
+# # sensor.memory_use_percent:
+# #  friendly_name: Использование памяти
+# # sensor.disk_use_percent_:
+# #  friendly_name: Использование диска
+# # sensor.disk_free_:
+# #  friendly_name: Свободно на диске (Gb)
+
+# # SPEEDTEST
+# #sensor.speedtest_ping:
+# #  friendly_name: Ping
+# #  show_last_changed: true
+# #sensor.speedtest_download: 
+# #  friendly_name: Download
+# #  show_last_changed: true
+# #sensor.speedtest_upload: 
+# #  friendly_name: Upload  
+# #  show_last_changed: true
+
+
+
+# # РАЗРАБОТКА
+# input_select.development:
+#  friendly_name: Меню
+# input_select.log_level:
+#  friendly_name: Журнал
+# switch.developer_mode:
+#  friendly_name: Режим разработчика
+
+# # КАМЕРЫ
+# camera.XiaoFang:
+#  friendly_name: Кухня
+# camera.XiaoFang2:
+#  friendly_name: Прихожая
+# camera.YiNM:
+#  friendly_name: гостиная
+
+
+# ПОГОДА
+sun.sun:
+  friendly_name: Солнце
+  extra_badge:
+    - entity_id: sensor.sunrise_time
+    - entity_id: sensor.sunset_time
+  extra_data_template: 
+    - "Рассвет: ${entities['sensor.sunrise_time'].state}"
+    - "Закат: ${entities['sensor.sunset_time'].state}"
+
+sensor.sunrise_time:
+  friendly_name: Рассвет
+
+sensor.sunset_time:
+  friendly_name: Закат
+ 
+
+# # ТАЙМЕРЫ
+# timer.light_gw: 
+#   friendly_name: Шлюз свет
+# timer.entrance: 
+#   friendly_name: Вход
+# timer.humidifier: 
+#     friendly_name: Увлажнитель
+
+
+
+# binary_sensor.router_main: 
+#   friendly_name: Роутер Asus
+  # icon_color: green
+  # show_last_changed: true
+  # extra_data_template: >
+  #   ${entities['input_datetime.door_entry_last'].attributes.hour}:${entities['input_datetime.door_entry_last'].attributes.minute}
+  #   (${entities['sensor.door_entry_last_ago'].state} назад)
+
+
+
+
+# # ДОП ЗНАЧОК
+# #--------------
+# # extra_badge:
+# #  entity_id: sensor.my_sensor  
+
+# # или атрибут, если не указан первый параметр   
+# #  attribute: power_consumption
+# #  unit: W
+
+# # не отображать значок при состояниях
+# # blacklist_states: 0  
+# # blacklist_states: 'z'
+  
+
+  
+
+# # ПОСЛЕДНИЕ СОСТОЯНИЯ
+# input_datetime.door_entry_last:
+#   persistent: true
+#   # state_card_mode: badges
+# input_datetime.window_livingroom_last:
+#   persistent: true
+# input_datetime.window_bedroom_last:
+#   persistent: true    
+
+
+
+# # ПОТРЕБЛЕНИЕ ЭЛЕКТРИЧЕСТВА
+# sensor.plug_comp_load:
+#   friendly_name: Текущее потребление
+# sensor.plug_comp_today:
+#   friendly_name: Потребление за день
+#   icon: mdi:counter
+# sensor.plug_comp_yesterday:
+#   friendly_name: Потребление за вчера
+#   icon: mdi:counter  
+# sensor.plug_comp_week:
+#   friendly_name: Потребление за неделю
+#   icon: mdi:counter
+# sensor.plug_comp_lastweek:
+#   friendly_name: Потребление за прошлую неделю
+#   icon: mdi:counter  
+# sensor.plug_comp_month:
+#   friendly_name: Потребление за месяц
+#   icon: mdi:counter  
+# sensor.plug_comp_lastmonth:
+#   friendly_name: Потребление за прошлый месяц
+#   icon: mdi:counter 
+
+
+# sensor.plug_1_load:
+#   friendly_name: Текущее потребление
+# sensor.plug_1_today:
+#   friendly_name: Потребление за день
+#   icon: mdi:counter
+# sensor.plug_1_yesterday:
+#   friendly_name: Потребление за вчера
+#   icon: mdi:counter  
+# sensor.plug_1_week:
+#   friendly_name: Потребление за неделю
+#   icon: mdi:counter
+# sensor.plug_1_lastweek:
+#   friendly_name: Потребление за прошлую неделю
+#   icon: mdi:counter  
+# sensor.plug_1_month:
+#   friendly_name: Потребление за месяц
+#   icon: mdi:counter  
+# sensor.plug_1_lastmonth:
+#   friendly_name: Потребление за прошлый месяц
+#   icon: mdi:counter  
+
+
+# sensor.plug_2_load:
+#   friendly_name: Текущее потребление
+# sensor.plug_2_today:
+#   friendly_name: Потребление за день
+#   icon: mdi:counter
+# sensor.plug_2_yesterday:
+#   friendly_name: Потребление за вчера
+#   icon: mdi:counter  
+# sensor.plug_2_week:
+#   friendly_name: Потребление за неделю
+#   icon: mdi:counter
+# sensor.plug_2_lastweek:
+#   friendly_name: Потребление за прошлую неделю
+#   icon: mdi:counter  
+# sensor.plug_2_month:
+#   friendly_name: Потребление за месяц
+#   icon: mdi:counter  
+# sensor.plug_2_lastmonth:
+#   friendly_name: Потребление за прошлый месяц
+#   icon: mdi:counter  
+

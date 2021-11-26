@@ -1,0 +1,142 @@
+####################################################
+#                   INPUT SELECT                   #
+####################################################
+# https://www.home-assistant.io/components/input_select/
+
+input_select:
+  
+  development:
+    name: Development
+    options:
+      - "Restart HA"
+      - "Restart Automation"
+      - "Restart Group"
+      - "Reloading Customize"
+      - "Reloading Scripts"
+      - "Off"
+    initial: "Off"
+  
+  log_level:
+    name: Log Level
+    options:
+      - critical
+      - fatal
+      - error
+      - warning
+      - warn
+      - info
+      - debug
+      - notset
+    initial: warn  
+
+  # status:
+  #   name: Status
+  #   options:
+  #   - "Home"
+  #   - "Work"
+  #   - "Away"
+  #   - "Sleep"
+  #   initial: "Home"
+  
+  # avr_input:
+  #   name: AVR Input
+  #   options:
+  #   - Chromecast
+  #   - KODI
+  #   - HA
+  #   - PC
+  #   - Standby
+  #   initial: Standby
+  #   icon: mdi:TV
+
+  
+
+####################################################
+#                   INPUT BOOLEAN                  #
+####################################################
+# https://www.home-assistant.io/components/input_boolean
+input_boolean:
+  tv:
+    name: TV
+    initial: off
+    icon: mdi:TV
+  # ha_uptime:
+  #   name: Home Assistant Uptime
+  #   initial: on
+
+
+
+####################################################
+#                   INPUT DATETIME                 #
+####################################################
+# https://www.home-assistant.io/components/input_datetime/
+input_datetime:
+  door_entry_last:
+    name: Входная дверь ПД
+    has_date: false
+    has_time: true
+    # initial: 00:00
+  window_livingroom_last:
+    name: Окно зал ПД
+    has_date: false
+    has_time: true
+  window_bedroom_last:
+    name: Окно спальня ПД
+    has_date: false
+    has_time: true    
+
+
+####################################################
+#                   INPUT NUMBER                   #
+####################################################
+# https://www.home-assistant.io/components/input_number/
+input_number:
+  volume:
+    icon: mdi:volume-high
+    name: Volume
+    initial: 30
+    min: 1
+    max: 100
+    step: 1
+  
+  tariff_elec_allday:
+    name: Тариф эл. общий
+    icon: mdi:currency-rub
+    mode: box
+    unit_of_measurement: 'руб'
+    initial: 3.77
+    min: 1
+    max: 20
+    step: 0.01
+
+  tariff_elec_day:
+    name: Тариф эл. день(7-23)
+    icon: mdi:currency-rub
+    mode: box
+    unit_of_measurement: 'руб'
+    initial: 4.33
+    min: 1
+    max: 20
+    step: 0.01
+  
+  tariff_elec_night:
+    name: Тариф эл. ночь(23-7)
+    icon: mdi:currency-rub
+    mode: box
+    unit_of_measurement: 'руб'
+    initial: 1.6
+    min: 1
+    max: 20
+    step: 0.01       
+
+
+
+####################################################
+#                   INPUT TEXT                     #
+####################################################
+# https://www.home-assistant.io/components/input_text/
+input_text:
+  commit_text:
+    name: Text commit
+    initial: ''
+  

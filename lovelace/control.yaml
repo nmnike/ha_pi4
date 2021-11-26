@@ -1,0 +1,227 @@
+title: Панель управления
+id: control
+icon: mdi:keyboard
+cards:
+
+  - type: vertical-stack
+    cards:
+
+      - type: custom:vertical-stack-in-card
+        cards: 
+        - type: markdown
+          content: >
+              #### Аварийные датчики
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_header_toggle: false
+          filter:
+            include:
+              - entity_id: binary_sensor.water*
+              - entity_id: binary_sensor.smoke*
+            exclude:
+              - state: 'off'
+
+      - type: custom:vertical-stack-in-card
+        cards: 
+        - type: markdown
+          content: >
+              #### Отвалившиеся светильники
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_header_toggle: false
+          filter:
+            include:
+              - domain: light
+                state: 'unavailable'
+
+      - type: custom:vertical-stack-in-card
+        cards:  
+        - type: markdown
+          content: >
+              #### Активные светильники
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_header_toggle: false
+          filter:
+            include:
+              - domain: light
+                state: 'on'
+            exclude:
+              - entity_id: light.broadlink_07_table
+
+      - type: custom:vertical-stack-in-card
+        cards:                   
+        - type: markdown
+          content: >
+              #### Активные таймеры
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_header_toggle: false
+          filter:
+            include:
+              - domain: timer
+            exclude:
+              - domain: timer
+                state: 'idle'
+
+  - type: vertical-stack
+    cards:
+
+      - type: custom:vertical-stack-in-card
+        cards:          
+        - type: markdown
+          content: >
+              #### Обнаружение движения
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: glance
+            show_state: false
+          filter:
+            include:
+              - entity_id: binary_sensor.motion*
+            exclude:
+              - state: 'off'
+              - entity_id: binary_sensor.*battery
+
+      - type: custom:vertical-stack-in-card
+        cards:          
+        - type: markdown
+          content: >
+              #### Телевизоры
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_state: false
+          filter:
+            include:
+              - entity_id: switch.tv_*
+            exclude:
+              - state: 'off'
+
+      - type: custom:vertical-stack-in-card
+        cards:  
+        - type: markdown
+          content: >
+              #### Отвалившиеся выключатели
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_header_toggle: false
+          filter:
+            include:
+              - domain: switch
+                state: 'unavailable'
+
+      - type: custom:vertical-stack-in-card
+        cards:  
+        - type: markdown
+          content: >
+              #### Розетки с нагрузкой более 5 Ватт
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_header_toggle: false
+          filter:
+            include:
+              - entity_id: sensor.load*
+              - entity_id: sensor.bw_power
+            exclude:
+              - state: '< 5.0'
+
+      - type: custom:vertical-stack-in-card
+        cards:                
+        - type: markdown
+          content: >
+              #### Cенсоры освещения - свет более 500 люмен
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_header_toggle: false
+          filter:
+            include:
+              - entity_id: sensor.illumination* 
+            exclude:
+              - state: '< 500.0'
+
+  - type: vertical-stack
+    cards:
+
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: markdown
+          content: >
+              #### Открытые окна и двери
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: glance
+            show_state: false
+          filter:
+            include:
+              - entity_id: binary_sensor.door_window*
+            exclude:
+              - state: 'off'
+
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: markdown
+          content: >
+              #### Влажность менее 45%
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_header_toggle: false
+          filter:
+            include:
+              - entity_id: sensor.humidity*
+            exclude:
+              - state: '> 45'
+              - entity_id: sensor.*battery
+              
+      - type: custom:vertical-stack-in-card
+        cards:
+        - type: markdown
+          content: >
+              #### Влажность более 60%
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_header_toggle: false
+          filter:
+            include:
+              - entity_id: sensor.humidity*
+            exclude:
+              - state: '< 60'
+              - entity_id: sensor.*battery
+
+      - type: custom:vertical-stack-in-card
+        cards:              
+        - type: markdown
+          content: >
+              #### Сенсоры менее 30% заряда
+        - type: custom:auto-entities
+          show_empty: false
+          card:
+            type: entities
+            show_header_toggle: false
+          filter:
+            include:
+              - entity_id: sensor.temp*battery
+            exclude:
+              - state: '> 30.0'
+

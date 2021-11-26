@@ -1,0 +1,158 @@
+####################################################
+#               Automation TEST                    #
+####################################################
+# https://www.home-assistant.io/components/xiaomi_aqara/
+# https://www.home-assistant.io/docs/automation/action/
+# https://www.home-assistant.io/docs/configuration/templating/
+# https://www.home-assistant.io/docs/scripts/conditions/
+
+# ТЕСТ 
+- alias: test
+  initial_state: 'on'
+  trigger:
+    entity_id: input_boolean.tv
+    platform: state
+    to: 'on'
+  # condition:
+  #   - condition: state
+  #     entity_id: light.gateway_light
+  #     state: 'off'    
+  action:
+    - service: timer.cancel
+      entity_id: timer.light_gw
+    - service: timer.start
+      entity_id: timer.light_gw
+    # - service: light.turn_on
+    #   entity_id: light.gateway_light
+    #   data:
+    #     brightness: 255
+    #     rgb_color: [230, 255, 255]
+    #     # transition: 8
+    #     # color_name: red
+    - service: script.notify_test
+      data:
+        message: скрипт тест
+    # - delay: 00:00:20
+    # - service: script.notify_photo
+    
+# - alias: test_2
+#   initial_state: 'on'
+#   trigger:
+#     entity_id: input_boolean.tv
+#     platform: state
+#     to: 'off'
+#   condition:
+#     - condition: state
+#       entity_id: light.gateway_light
+#       state: 'on'    
+#   action:
+#     - service: light.turn_off
+#       entity_id: light.gateway_light
+#     - service: script.notify_test
+#       data:
+#         message: Выключили свет на шлюзе
+    # - delay: 00:00:20
+    # - service: script.notify_photo
+
+      # data:
+      #   caption: Пример фото
+     
+    # - service: notify.telegram
+    #   data:
+    #     message: "{{as_timestamp(now()) |  timestamp_custom('%d.%m.%Y %H:%M:%S') }}\nСостояние переключателя {{states.input_boolean.tv.state}}"
+
+    # service: script.restart_group_ha
+    # service: notify.pushbullet
+    # data:
+    #   title: Какой-то заголовок
+    #   message: Состояние переключателя {{states.input_boolean.tv.state}}
+    #   target: channel/nmha
+    #   data:
+    #     priority: 1
+    #     sound: spacealarm
+    #     # url: google.com
+    #     # file: /path/to/my/file
+    #     # file_url: https://url/test-361512_960_720.jpg
+
+#  data_template:
+        # message: vacuum power on {{ state.attributes.load_power }}
+
+
+# - alias: DoorBell 
+#   # id: '1529580460783'
+#   trigger:
+#     platform: event
+#     event_type: click
+#     event_data:
+#       entity_id: binary_sensor.switch_158d00010d05fc
+#       click_type: single
+#   condition:
+#     condition: time
+#     after: '08:00:00'
+#     before: '23:00:00'
+#     weekday:
+#       - mon
+#       - tue
+#       - wed
+#       - thu
+#       - fri
+#       - sat
+#       - sun
+#   action:
+#     - service: xiaomi_aqara.play_ringtone
+#       data:
+#        gw_mac: f0b4299ac421
+#        ringtone_id: 10
+#        ringtone_vol: 10
+#     - service: notify.telegram_ha
+#       data:
+#         message: 'The doorbell rings!!'
+
+
+
+# # ------------------------------------------------------------------------------
+# # - Состояние батареи датчиков
+# # ------------------------------------------------------------------------------
+# - alias: push_low_battery
+#  trigger:
+#    - platform: time
+#      at: '10:00:00'
+#    - platform: time
+#      at: '18:00:00'
+#  condition:
+#    condition: or
+#    conditions:
+#      - condition: template
+#        value_template: >
+#          {% set threshold = 10 %}
+#            {% for item in states.sensor if (item.attributes.battery_level is defined and item.attributes['battery_level'] | int < threshold) %}
+#              {% if loop.first %}
+#                {{ true }}
+#              {% endif %}
+#            {% endfor %}
+#      - condition: template
+#        value_template: >
+#          {% set threshold = 10 %}
+#            {% for item in states.binary_sensor if (item.attributes.battery_level is defined and item.attributes['battery_level'] | int < threshold) %}
+#              {% if loop.first %}
+#                {{ true }}
+#              {% endif %}
+#            {% endfor %}
+#  action:
+#    - service: notify.pushover
+#      data_template:
+#        title: "Низкий уровень заряда!"
+#        message: >
+#          {% set threshold = 10 %}
+#          {% set domains = [states.binary_sensor, states.sensor] %}
+#            {% for domain in domains %}
+#              {% for item in domain if (item.attributes.battery_level is defined and item.attributes['battery_level'] | int < threshold) %}
+#                {% if (item.attributes.battery_level is defined and item.attributes['battery_level'] | int < threshold) %}
+#                  {{ item.name }}({{ item.attributes['battery_level'] }})
+#                {% endif %}
+#              {% endfor %}
+#            {% endfor %}
+#        data:
+#          device: iphone
+#          sound: spacealarm
+#          priority: 0

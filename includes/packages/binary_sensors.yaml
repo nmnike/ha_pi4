@@ -1,0 +1,106 @@
+####################################################
+#                     BINARY SENSOR                #
+####################################################
+#https://home-assistant.io/components/binary_sensor.ping/
+
+binary_sensor: 
+
+# ROUTER  
+  - platform: ping
+    host: !secret ip_zte
+    name: ping_zte
+    count: 2
+    scan_interval: 30
+
+  - platform: ping
+    host: !secret ip_netgear
+    name: ping_netgear
+    count: 2
+    scan_interval: 30
+
+  - platform: ping
+    host: !secret ip_mi-r3g
+    name: ping_mi-r3g
+    count: 2
+    scan_interval: 30
+
+  - platform: ping
+    host: !secret ip_mi-rmini
+    name: ping_mi-rmini
+    count: 2
+    scan_interval: 30
+
+  - platform: ping
+    host: !secret ip_mi-r3
+    name: ping_mi-r3
+    count: 2
+    scan_interval: 30
+
+# NOTEBOOK  
+  - platform: ping
+    host: !secret ip_notebook_asus
+    name: ping_notebook_asus
+    count: 2
+    scan_interval: 30
+
+  - platform: ping
+    host: !secret ip_stora
+    name: ping_stora
+    count: 2
+    scan_interval: 30
+    
+  - platform: ping
+    host: !secret ip_mirobot
+    name: ping_mirobot
+    count: 2
+    scan_interval: 30
+
+  - platform: ping
+    host: !secret ip_led_kitchen
+    name: ping_led_kitchen
+    count: 2
+    scan_interval: 30
+
+  - platform: ping
+    host: !secret ip_led_living_room
+    name: ping_led_living_room
+    count: 2
+    scan_interval: 30
+
+  - platform: ping
+    host: !secret ip_xiaomi_gateway
+    name: ping_xiaomi_gateway
+    count: 2
+    scan_interval: 30 
+
+  - platform: ping
+    host: !secret ip_tv_sony
+    name: ping_tv_sony
+    count: 2
+    scan_interval: 30
+
+  - platform: ping
+    host: !secret ip_tv_kitchen
+    name: ping_tv_kitchen
+    count: 2
+    scan_interval: 30
+
+# WEBCAM
+  - platform: ping
+    host: !secret ip_yinm
+    name: ping_yinm
+    count: 2
+    scan_interval: 30 
+
+  - platform: ping
+    host: !secret ip_xiaofang
+    name: ping_xiaofang
+    count: 2
+    scan_interval: 30 
+
+  - platform: ping
+    host: !secret ip_xiaofang2
+    name: ping_xiaofang2
+    count: 2
+    scan_interval: 30 
+    

@@ -1,0 +1,14 @@
+### Yeelight ###
+# https://www.home-assistant.io/components/light.yeelight/
+yeelight:
+  devices:
+    !secret ip_led_kitchen:
+      name: led_kitchen
+      transition: 1000
+      model: strip1 
+    
+    !secret ip_led_living_room:
+      name: led_living_room
+      transition: 1000
+      model: strip1 
+

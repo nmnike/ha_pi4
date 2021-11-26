@@ -1,0 +1,5 @@
+initialize_hass:
+  alias: 'Initialize HASS after restart'
+  sequence:
+    - service: script.turn_on
+      entity_id: script.google_backup

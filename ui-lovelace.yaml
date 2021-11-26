@@ -1,0 +1,13 @@
+# https://www.home-assistant.io/lovelace/
+# https://materialdesignicons.com/tag/community
+
+title: Умный дом
+views:
+  - !include lovelace/home.yaml
+  - !include lovelace/info.yaml
+  - !include lovelace/camera.yaml
+  - !include lovelace/lan.yaml
+  - !include lovelace/control.yaml
+  - !include lovelace/powercount.yaml
+  - !include lovelace/battery.yaml
+  - !include lovelace/develop.yaml

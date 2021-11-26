@@ -1,0 +1,45 @@
+####################################################
+#               Recorder Component                 #
+####################################################
+# recorder: 
+#    db_url: mysql://hass:hass@core-mariadb/homeassistant?charset=utf8
+#    purge_keep_days: 10
+  
+# recorder:
+#   purge_keep_days: 5
+#   purge_interval: 1
+#   include:
+#     domains:
+#       - switch
+#       - light
+#       - vacuum
+#       - sensor
+#       - binary_sensor
+#       - input_select
+#       - input_boolean
+#       - input_datetime
+#       - input_number
+#       - input_text
+#       - lock
+#       - automation
+#       - script
+#       - notify
+#       - python_script
+#       - xiaomi_aqara
+#       - device_tracker
+      
+# exclude:
+  #   domains:
+  #     # - automation
+  #     # - weblink
+  #     # - updater
+  #   entities:
+  #     # - automation.power
+  #     - sensor.sunrise_time
+  #     - sensor.sunset_time
+  #     - sensor.time
+  #     - sensor.date
+  #     - sensor.date__time
+  #     - sensor.online
+  #     - sensor.online_custom
+  #     - sun.sun

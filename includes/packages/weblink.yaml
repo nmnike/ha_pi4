@@ -1,0 +1,15 @@
+####################################################
+#                      Weblink                     #
+####################################################
+# https://www.home-assistant.io/components/weblink/
+
+#weblink:
+#  entities:
+    
+#    - name: Zte
+#      url: !secret url_zte
+#      icon: mdi:router-wireless
+    
+#    - name: Mi-r3g
+#      url: !secret url_mi-r3g
+#      icon: mdi:router-wireless

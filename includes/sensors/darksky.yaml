@@ -1,0 +1,172 @@
+- platform: darksky
+  api_key: !secret darksky_api
+  language: ru
+  # update_interval: '00:10'
+  scan_interval: 600
+  forecast:
+     - 1
+     - 2
+     - 3
+     - 4
+     - 5
+  monitored_conditions:
+     - icon
+     - summary
+     - humidity
+     - temperature
+     - temperature_high
+     - temperature_low
+     - wind_speed
+     - wind_bearing
+     - pressure
+     - cloud_cover
+     - visibility
+     - uv_index
+
+# ------------------------------------------------------------------------------
+# - Солнце
+# ------------------------------------------------------------------------------
+- platform: template
+  sensors:
+    sunset_time:
+      icon_template: mdi:weather-sunset-down
+      value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") }}'
+    sunrise_time:
+      icon_template: mdi:weather-sunset-up
+      value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%H:%M") }}'
+    blank:  
+      value_template: ''
+      
+# ------------------------------------------------------------------------------
+# - Луна
+# ------------------------------------------------------------------------------
+- platform: moon
+- platform: template
+  sensors:
+    moon_custom:
+      value_template: >
+        {% set m_phase = states.sensor.moon.state %}
+        {% if m_phase == 'new_moon' %}
+          Новолуние
+        {% elif m_phase == 'waxing_crescent' %}
+          Растущий месяц
+        {% elif m_phase == 'first_quarter' %}
+          Первая четверть
+        {% elif m_phase == 'waxing_gibbous' %}
+          Растущая луна
+        {% elif m_phase == 'full_moon' %}
+          Полнолуние
+        {% elif m_phase == 'waning_gibbous' %}
+          Убывающая луна
+        {% elif m_phase == 'last_quarter' %}
+          Последняя четверть
+        {% elif m_phase == 'waning_crescent' %}
+          Спадающий месяц
+        {% else %}
+          Ошибка
+        {% endif %}
+
+# ------------------------------------------------------------------------------
+# - Давление
+# ------------------------------------------------------------------------------
+- platform: template
+  sensors:
+    dark_sky_pressure_custom:
+      unit_of_measurement: 'мм рт.ст.'
+      value_template: '{{ (states.sensor.dark_sky_pressure.state|float * 0.75) | round(0) }}'
+
+# ------------------------------------------------------------------------------
+# - Ветер
+# ------------------------------------------------------------------------------
+- platform: template
+  sensors:
+    wind_custom:
+      value_template: >
+        {% set value = states.sensor.dark_sky_wind_bearing.state|float %}
+        {% set speed = (states.sensor.dark_sky_wind_speed.state|float) | round(1) %}
+          {% if value >= 0 and value < 22.5 %}
+            Северный, {{ speed }} м/с
+          {% elif value >= 22.5 and value < 67.5 %}
+            Северо-Восточный, {{ speed }} м/с
+          {% elif value >= 67.5 and value < 112.5 %}
+            Восточный, {{ speed }} м/с
+          {% elif value >= 112.5 and value < 157.5 %}
+            Юго-Восточный, {{ speed }} м/с
+          {% elif value >= 157.5 and value < 202.5 %}
+            Южный, {{ speed }} м/с
+          {% elif value >= 202.5 and value < 247.5 %}
+            Юго-Западный, {{ speed }} м/с
+          {% elif value >= 247.5 and value < 292.5 %}
+            Западный, {{ speed }} м/с
+          {% elif value >= 292.5 and value < 337.5 %}
+            Северо-Западный, {{ speed }} м/с
+          {% elif value >= 337.5 and value <= 360 %}
+            Северный, {{ speed }} м/с
+          {% else %}
+            Безветренно
+          {% endif %}
+
+# ------------------------------------------------------------------------------
+# - Дни недели, местоположение, температура мин/макс
+# ------------------------------------------------------------------------------
+- platform: template
+  sensors:
+    city:
+      value_template: 'Местоположение'
+    day_1_ahead:
+      value_template: >
+        {% if now().weekday() >= 6 %}
+          {{ ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'][now().weekday() - 6] }}
+        {% else %}
+          {{ ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'][now().weekday() + 1] }}
+        {% endif %}
+    day_2_ahead:
+      value_template: >
+        {% if now().weekday() >= 5 %}
+          {{ ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'][now().weekday() - 5] }}
+        {% else %}
+          {{ ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'][now().weekday() + 2] }}
+        {% endif %}
+    day_3_ahead:
+      value_template: >
+        {% if now().weekday() >= 4 %}
+          {{ ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'][now().weekday() - 4] }}
+        {% else %}
+          {{ ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'][now().weekday() + 3] }}
+        {% endif %}
+    day_4_ahead:
+      value_template: >
+        {% if now().weekday() >= 3 %}
+          {{ ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'][now().weekday() - 3] }}
+        {% else %}
+          {{ ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'][now().weekday() + 4] }}
+        {% endif %}
+    day_5_ahead:
+      value_template: >
+        {% if now().weekday() >= 2 %}
+          {{ ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'][now().weekday() - 2] }}
+        {% else %}
+          {{ ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'][now().weekday() + 5] }}
+        {% endif %}
+    temp_now:
+      value_template: '{{ (states.sensor.dark_sky_temperature.state|float) | round(0) }}°'
+    temp_max_day_1_ahead:
+      value_template: '{{ (states.sensor.dark_sky_daytime_high_temperature_1d.state|float) | round(0) }}'
+    temp_min_day_1_ahead:
+      value_template: '{{ (states.sensor.dark_sky_overnight_low_temperature_1d.state|float) | round(0) }}'
+    temp_max_day_2_ahead:
+      value_template: '{{ (states.sensor.dark_sky_daytime_high_temperature_2d.state|float) | round(0) }}'
+    temp_min_day_2_ahead:
+      value_template: '{{ (states.sensor.dark_sky_overnight_low_temperature_2d.state|float) | round(0) }}'
+    temp_max_day_3_ahead:
+      value_template: '{{ (states.sensor.dark_sky_daytime_high_temperature_3d.state|float) | round(0) }}'
+    temp_min_day_3_ahead:
+      value_template: '{{ (states.sensor.dark_sky_overnight_low_temperature_3d.state|float) | round(0) }}'
+    temp_max_day_4_ahead:
+      value_template: '{{ (states.sensor.dark_sky_daytime_high_temperature_4d.state|float) | round(0) }}'
+    temp_min_day_4_ahead:
+      value_template: '{{ (states.sensor.dark_sky_overnight_low_temperature_4d.state|float) | round(0) }}'
+    temp_max_day_5_ahead:
+      value_template: '{{ (states.sensor.dark_sky_daytime_high_temperature_5d.state|float) | round(0) }}'
+    temp_min_day_5_ahead:
+      value_template: '{{ (states.sensor.dark_sky_overnight_low_temperature_5d.state|float) | round(0) }}'

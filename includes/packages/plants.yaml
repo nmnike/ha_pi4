@@ -1,0 +1,9 @@
+plant:  
+  yucca:
+    sensors:
+      moisture: sensor.yucca_moisture
+      battery: sensor.yucca_battery
+      temperature: sensor.yucca_temperature
+      conductivity: sensor.yucca_conductivity
+      brightness: sensor.yucca_light_intensity
+    min_moisture: 10

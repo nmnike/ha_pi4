@@ -1,0 +1,36 @@
+### DEVICE TRACKER ###
+# https://www.home-assistant.io/components/device_tracker/
+# https://www.home-assistant.io/components/device_tracker.gpslogger/
+# https://www.home-assistant.io/components/device_tracker.bluetooth_tracker/
+
+### ZONE ###
+# https://www.home-assistant.io/components/zone/
+# https://www.home-assistant.io/getting-started/presence-detection/
+
+device_tracker:
+  # Google Maps API Tracking
+  # https://www.home-assistant.io/components/device_tracker.google_maps/
+  #- platform: google_maps
+  #  username: !secret google_mapsapi_username
+  #  password: !secret google_mapsapi_password
+  # max_gps_accuracy: 200
+
+  # https://www.home-assistant.io/components/device_tracker.owntracks/
+  #- platform: owntracks
+  #  max_gps_accuracy: 200
+  #  mqtt_topic: "owntracks/#"
+  #  events_only: True
+
+  # https://www.home-assistant.io/components/device_tracker.nmap_tracker/
+  # - platform: nmap_tracker
+  #   hosts: 
+  #     - !secret ip_oneplus
+  #     - !secret ip_redminote
+  #     - !secret ip_iphone_kate
+  #   home_interval: 5
+  #   track_new_devices: no
+  #  exclude:
+  #  scan_options: " --privileged -sP "
+  # consider_home: 1800 - Added to known_devices.yaml instead on a device by device basis.
+
+  

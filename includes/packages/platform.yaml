@@ -1,0 +1,57 @@
+####################################################
+#                     PLATFORM                     #
+####################################################
+
+### Xiaomi gateway ### 
+# https://www.home-assistant.io/components/xiaomi_aqara/
+xiaomi_aqara:
+  discovery_retry: 10 # Кол-во попыток подключения
+  gateways:
+   - mac: !secret xiaomi_gateway_mac
+     key: !secret xiaomi_gateway_key
+     host: !secret xiaomi_gateway_ip
+
+
+## Xiaomi Mi Robot Vacuum Cleaner ###
+# https://www.home-assistant.io/components/vacuum.xiaomi_miio/
+vacuum:
+  - platform: xiaomi_miio
+    host: !secret ip_mirobot
+    token: !secret vacuum_token
+
+
+#https://www.home-assistant.io/components/ffmpeg/
+ffmpeg:
+  ffmpeg_bin: /usr/bin/ffmpeg
+
+# media_player:
+#   - platform: braviatv
+#     host: !secret ip_tv_sony   # Sony TV
+#     name: Sony Bravia TV
+
+# platform: nfandroidtv
+# name: Bravia TV
+# host: ip
+
+#influxdb:
+#  username: !secret influxdb_username
+#  password: !secret influxdb_password
+#  max_retries: 3
+#  default_measurement: state
+  # include:
+  #   entities:
+  #     - sensor.bedroom_humidity
+  #     - sensor.bedroom_temperature
+#  component_config:
+#    counter.hotw:
+#      override_measurement: lt
+#  component_config_glob:
+#    sensor.*humidity:
+#      override_measurement: hum
+#    sensor.*temperature:
+#      override_measurement: temp
+
+rest_command:
+  google_backup:
+    url: !secret url_google_backup
+    timeout: '300'

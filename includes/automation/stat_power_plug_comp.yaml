@@ -1,0 +1,105 @@
+# ------------------------------------------------------------------------------
+# - Потребление сегодня, неделя, месяц
+# ------------------------------------------------------------------------------
+- alias: 00_power_counter_comp
+  initial_state: 'on'
+  trigger:
+    - platform: time_pattern
+      seconds: '/30'
+  action:
+    - service: mqtt.publish
+      data_template:
+        topic: "power/plug_comp/today"
+        payload: '{{(states.sensor.plug_comp_today.state | float + (states.sensor.plug_comp_load.state | float /120000))|round(5)}}'
+        retain: true
+    - service: mqtt.publish
+      data_template:
+        topic: "power/plug_comp/week"
+        payload: '{{(states.sensor.plug_comp_week.state | float + (states.sensor.plug_comp_load.state | float /120000))|round(5)}}'
+        retain: true
+    - service: mqtt.publish
+      data_template:
+        topic: "power/plug_comp/month"
+        payload: '{{(states.sensor.plug_comp_month.state | float + (states.sensor.plug_comp_load.state | float /120000))|round(5)}}'
+        retain: true
+
+# ------------------------------------------------------------------------------
+# - Новый день, обнуление счетчика "Сегодня"
+# ------------------------------------------------------------------------------
+- alias: 00_power_new_day_comp
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      at: '00:00:05'
+  action:
+    # Запись данных за прошедший день
+    - service: mqtt.publish
+      data_template:
+        topic: "power/plug_comp/yesterday"
+        payload: '{{(states.sensor.plug_comp_today.state | float )|round(5)}}'
+        retain: true 
+    - delay: 00:00:05
+    # Обнуление данных текущего дня
+    - service: mqtt.publish
+      data_template:
+        topic: "power/plug_comp/today"
+        payload: '{{ 0.0 }}'
+        retain: true
+
+# ------------------------------------------------------------------------------
+# - Новая неделя, обнуление счетчика "Неделя"
+# ------------------------------------------------------------------------------
+- alias: 00_power_new_week_comp
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      at: '00:00:10'
+  condition:
+    - condition: template
+      value_template: '{{ now().isoweekday() == 1 }}'
+  action:
+     # Запись данных за прошлую мнеделю
+    - service: mqtt.publish
+      data_template:
+        topic: "power/plug_comp/lastweek"
+        payload: '{{(states.sensor.plug_comp_week.state | float )|round(5)}}'
+        retain: true 
+    - delay: 00:00:05
+    # Обнуление данных текущего дня
+    - service: mqtt.publish
+      data_template:
+        topic: "power/plug_comp/week"
+        payload: '{{ 0.0 }}'
+        retain: true
+
+# ------------------------------------------------------------------------------
+# - Новый месяц, сохранение данных, обнуление счетчика "Месяц"
+# ------------------------------------------------------------------------------
+- alias: 00_power_new_month_comp
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      at: '00:00:15'
+  condition:
+    - condition: template
+      value_template: '{{ now().day == 1 }}'
+  action:
+    # Запись данных за прошедший месяц
+    - service: mqtt.publish
+      data_template:
+        topic: "power/plug_comp/lastmonth"
+        payload: '{{(states.sensor.plug_comp_month.state | float )|round(5)}}'
+        retain: true 
+    - delay: 00:00:05
+    # Запись данных по номеру месяца
+    - service: mqtt.publish
+      data_template:
+        topic: "power/plug_comp/{{now().year}}-{{now().month - 1}}"
+        payload: '{{(states.sensor.plug_comp_month.state | float)}}'
+        retain: true
+    # Обнуление данных текущего месяца
+    - service: mqtt.publish
+      data_template:
+        topic: "power/plug_comp/month"
+        payload: '{{ 0.0 }}'
+        retain: true

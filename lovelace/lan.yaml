@@ -1,0 +1,82 @@
+title: Локальная сеть
+id: lan
+icon: mdi:lan
+cards:
+  
+  - type: vertical-stack
+    cards:
+
+    - type: custom:vertical-stack-in-card
+      cards:
+        - type: glance
+          show_state: false
+          entities:
+          - entity: binary_sensor.ping_zte
+            name: ZTE (1)
+            icon: mdi:router-wireless
+          - entity: binary_sensor.ping_netgear
+            name: Netgear (11.1)
+            icon: mdi:router-wireless
+          - entity: binary_sensor.ping_mi_r3g
+            name: mi-r3g (102)
+            icon: mdi:router-wireless
+          - entity: binary_sensor.ping_mi_rmini
+            name: mi-rmini (104)
+            icon: mdi:router-wireless
+          - entity: binary_sensor.ping_mi_r3
+            name: mi-r3 (103)
+            icon: mdi:router-wireless
+
+  - type: vertical-stack
+    cards:
+
+    - type: custom:vertical-stack-in-card
+      cards:
+      - type: glance
+        show_state: false
+        entities:
+        - entity: binary_sensor.ping_notebook_asus
+          name: asus (10)
+          icon: mdi:laptop
+        - entity: binary_sensor.ping_stora
+          name: stora (15)
+          icon: mdi:nas
+        - entity: binary_sensor.ping_mirobot
+          name: mi robot (51)
+          icon: mdi:robot-vacuum
+        - entity: binary_sensor.ping_tv_sony
+          name: TV Sony (25)
+          icon: mdi:television-box  
+        - entity: binary_sensor.ping_tv_kitchen
+          name: TV кухня (47)
+          icon: mdi:television-box      
+    
+    - type: custom:vertical-stack-in-card
+      cards:
+      - type: glance
+        show_state: false
+        entities:
+        - entity: binary_sensor.ping_xiaomi_gateway
+          name: xiaomi шлюз (53)
+          icon: mdi:gate-and
+        - entity: binary_sensor.ping_led_living_room
+          name: LED зал (52)
+          icon: mdi:lightbulb
+        - entity: binary_sensor.ping_led_kitchen
+          name: LED кухня (22)
+          icon: mdi:lightbulb
+    
+    - type: custom:vertical-stack-in-card
+      cards:
+      - type: glance
+        show_state: false
+        entities:
+        - entity: binary_sensor.ping_yinm
+          name: YI NM (18)
+          icon: mdi:webcam
+        - entity: binary_sensor.ping_xiaofang
+          name: xiaofang (23)
+          icon: mdi:webcam
+        - entity: binary_sensor.ping_xiaofang2
+          name: xiaofang2 (58)
+          icon: mdi:webcam

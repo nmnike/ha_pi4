@@ -1,0 +1,40 @@
+####################################################
+#                     CAMERA                       #
+####################################################
+#https://www.home-assistant.io/components/camera.ffmpeg/
+#https://www.home-assistant.io/components/camera.xiaomi/
+#https://www.home-assistant.io/components/camera.yi/
+#https://www.home-assistant.io/components/camera.generic/
+#https://www.home-assistant.io/components/camera.mjpeg/
+#https://www.home-assistant.io/components/camera.local_file/
+
+camera:
+  
+  # кухня
+  - platform: generic
+    name: xiaofang
+    still_image_url: !secret url_xiaofang
+    stream_source: !secret url_xiaofang_rtsp
+    scan_interval: 5
+    # authentication: basic
+    # verify_ssl: false
+    # username: !secret camera_username
+    # password: !secret camera_password_default
+ 
+  # прихожая
+  - platform: generic
+    name: xiaofang2
+    still_image_url: !secret url_xiaofang2
+    stream_source: !secret url_xiaofang2_rtsp
+    scan_interval: 5  
+
+  # зал
+  - platform: generic
+    name: yinm
+    still_image_url: !secret url_yinm
+    stream_source: !secret url_yinm_rtsp
+    scan_interval: 5  
+
+    
+
+    

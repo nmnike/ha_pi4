@@ -1,0 +1,6 @@
+####################################################
+#                shell command                     #
+####################################################
+
+shell_command:
+  update_git: '/usr/share/hassio/homeassistant/shell_scripts/gitupdate.sh "{{ states.input_text.commit_text.state}}"'

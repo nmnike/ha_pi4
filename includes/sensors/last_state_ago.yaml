@@ -1,0 +1,30 @@
+# Время последнего открытия входной двери
+  - platform: mqtt
+    state_topic: "binary_sensor/door_entry"
+    name: 'mqtt_binary_sensor_door_entry'
+
+# Время фиксации движения в прихожей
+  - platform: mqtt
+    state_topic: "binary_sensor/lobby"
+    name: 'mqtt_binary_sensor_lobby'
+
+# - platform: template
+#   sensors:
+#     door_entry_last_ago:
+#       value_template: "{% if states.input_datetime.door_entry_last.state %}{{ (as_timestamp(now()) - as_timestamp(strptime(now().strftime('%Y-%m-%d') + ' '+states.input_datetime.door_entry_last.state, '%H:%M:%S'))) | timestamp_custom('%H:%M',False)}}{% endif %}"
+#       icon_template: mdi:clock-outline
+#       unit_of_measurement: 'ч'
+
+# - platform: template
+#   sensors:
+#     window_livingroom_last_ago:
+#       value_template: "{{ (as_timestamp(now()) - as_timestamp(strptime(now().strftime('%Y-%m-%d') + ' '+states.input_datetime.window_livingroom_last.state, '%H:%M:%S'))) | timestamp_custom('%H:%M',False)}}"
+#       icon_template: mdi:clock-outline
+#       unit_of_measurement: 'ч'
+
+# - platform: template
+#   sensors:
+#     window_bedroom_last_ago:
+#       value_template: "{{ (as_timestamp(now()) - as_timestamp(strptime(now().strftime('%Y-%m-%d') + ' '+states.input_datetime.window_bedroom_last.state, '%H:%M:%S'))) | timestamp_custom('%H:%M',False)}}"
+#       icon_template: mdi:clock-outline
+#       unit_of_measurement: 'ч'      

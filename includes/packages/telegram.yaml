@@ -1,0 +1,23 @@
+####################################################
+#                     TELEGRAM                     #
+####################################################
+
+# https://www.home-assistant.io/components/telegram_bot
+
+# Telegram polling - для двустороннего обмена с телегой
+# https://www.home-assistant.io/components/telegram_bot.polling/
+
+# https://www.home-assistant.io/components/telegram_bot.broadcast/
+
+telegram_bot:
+  - platform: polling
+  # - platform: polling_proxy
+  # - platform: webhooks
+    api_key: !secret telegram_bot_apikey
+    # proxy_url: !secret telegram_bot_proxy_url
+    # proxy_params:
+    #   username: !secret telegram_bot_proxy_username
+    #   password: !secret telegram_bot_proxy_password
+    allowed_chat_ids:
+      - !secret telegram_bot_chat_nm
+      - !secret telegram_bot_chat_nm_test

@@ -1,0 +1,127 @@
+# ночной тариф с 23:00 до 7:00
+
+# Включаем розетку комп
+- alias: 04_plug_comp_on
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      at: '23:10:00'
+  condition:
+    - condition: state
+      entity_id: switch.plug_comp
+      state: 'off'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.plug_comp
+
+# Выключаем розетку комп
+- alias: 04_plug_comp_off
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      at: '06:00:00'
+  condition:
+    - condition: state
+      entity_id: switch.plug_comp
+      state: 'on'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.plug_comp
+
+
+# # Включаем розетку TV в будни
+# - alias: plug_tv_on
+#   trigger:
+#     - platform: time
+#       at: '06:30:00'
+#     - platform: time
+#       at: '18:00:00'  
+#   condition:
+#     - condition: state
+#       entity_id: switch.plug_humidifier
+#       state: 'off'
+#     - condition: time
+#       weekday:
+#         - mon
+#         - tue
+#         - wed
+#         - thu
+#         - fri
+#         # - sat
+#         # - sun  
+#   action:
+#     - service: switch.turn_on
+#       entity_id: switch.plug_humidifier
+
+# # Включаем розетку TV в субботу
+# - alias: plug_tv_on_sat
+#   trigger:
+#     - platform: time
+#       at: '07:00:00'
+#   condition:
+#     - condition: state
+#       entity_id: switch.plug_humidifier
+#       state: 'off'
+#     - condition: time
+#       weekday:
+#         - sat
+#   action:
+#     - service: switch.turn_on
+#       entity_id: switch.plug_humidifier
+
+# # Выключаем розетку TV в будни
+# - alias: plug_tv_off
+#   trigger:
+#     - platform: time
+#       at: '08:00:00'
+#     - platform: time
+#       at: '23:00:00'  
+#   condition:
+#     - condition: state
+#       entity_id: switch.plug_humidifier
+#       state: 'on'
+#     - condition: time
+#       weekday:
+#         - mon
+#         - tue
+#         - wed
+#         - thu
+#         - fri
+#         # - sat
+#         # - sun  
+#   action:
+#     - service: switch.turn_off
+#       entity_id: switch.plug_humidifier
+
+
+    
+
+
+    
+
+#     # - service: homeassistant.turn_on  
+#     # - service: notify.telegram
+#     #   data:
+#     #     message:
+
+
+# ##--- Matches every hour at 5 minutes past whole
+# # - alias: a1:
+# #  trigger:
+# #    platform: time
+# #    minutes: 5
+# #    seconds: 00
+
+# ##--- When 'at' is used, you cannot also match on hour, minute, seconds.
+# ##--- Military time format.
+# # - alias: a2:
+# #  trigger:
+# #    platform: time
+# #    at: '15:32:00'
+
+# ##--- You can also match on interval. This will match every 5 minutes
+# # - alias: a3:
+# #  trigger:
+# #    platform: time
+# #    minutes: '/5'
+# #    seconds: 00

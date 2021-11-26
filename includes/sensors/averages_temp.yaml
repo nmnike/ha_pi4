@@ -1,0 +1,23 @@
+# #-------------------------------------------
+# #  Average Temp
+# #-------------------------------------------
+# - platform: min_max
+#   name: Average Temperature
+#   type: mean
+#   round_digits: 1
+#   entity_ids:
+#     - sensor.wirelesstag_clara_room_temperature
+#     - sensor.wirelesstag_guest_room_temperature
+#     - sensor.wirelesstag_kitchen_temperature
+
+# #-------------------------------------------
+# #  Average Humidity
+# #-------------------------------------------
+# - platform: min_max
+#   name: Average Humidity
+#   type: mean
+#   round_digits: 1
+#   entity_ids:
+#     - sensor.wirelesstag_clara_room_humidity
+#     - sensor.wirelesstag_guest_room_humidity
+#     - sensor.wirelesstag_kitchen_humidity

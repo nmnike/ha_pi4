@@ -1,0 +1,39 @@
+### https://www.home-assistant.io/docs/automation/trigger/
+
+- alias: 00_ha_start
+  initial_state: true
+  trigger:
+    platform: homeassistant
+    event: start
+  action:    
+    - delay: '00:00:01'
+    - service: homeassistant.turn_on
+      entity_id: script.initialize_hass
+
+- alias: 00_backup_everyday
+  initial_state: false
+  trigger:    
+    platform: time
+    at: '01:30:00'
+  action:    
+    - service: script.turn_on
+      entity_id: script.ha_backup
+        
+- alias: 00_purge_db_everyday
+  initial_state: true
+  trigger:    
+    platform: time
+    at: '00:10:00'
+  action:    
+    - service: script.turn_on
+      entity_id: script.purge_db
+
+- alias: 01_update_entity
+  initial_state: true
+  trigger:    
+    platform: time_pattern
+    minutes: '/10'
+  action:    
+    - service: homeassistant.update_entity
+      entity_id:
+      -  sensor.last_boot_custom

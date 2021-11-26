@@ -1,0 +1,19 @@
+# https://www.home-assistant.io/components/notify.telegram/
+
+telegram_test:
+  alias: Telegram test
+  sequence:
+      service: notify.telegram_test
+      data:
+        title: Заголовок
+        message: Какой-то текст
+        data:
+          photo:
+            - url: 'http://localhost:8123{{states.camera.XiaoFang2.attributes.entity_picture}}'
+            # - url: http://ip/image.jpg
+            #  - url: https://ip/cgi-bin/currentpic.cgi
+            #    username: root
+            #    password: ismart12
+            #    verify_ssl: false
+              caption: Фото с камеры          
+

@@ -1,0 +1,37 @@
+title: camera
+icon: mdi:cctv
+
+cards:   
+    
+    - type: picture-glance
+      title: Прихожая
+      camera_image: camera.xiaofang2
+      camera_view: live
+      entities:
+        - entity: switch.photo_xiaofang2
+          icon: mdi:camera
+
+    - type: picture-glance
+      title: Кухня
+      camera_image: camera.xiaofang
+      camera_view: live
+      entities:
+        - entity: switch.photo_xiaofang
+          icon: mdi:camera
+
+    - type: picture-glance
+      title: Зал
+      camera_image: camera.yinm
+      camera_view: live
+      entities:
+        - entity: switch.photo_yinm
+          icon: mdi:camera      
+
+
+    # - type: entities
+    #   show_header_toggle: false
+    #   entities:
+        #  - entity: script.photo_reolink             
+        #  - entity: script.video_reolink 
+        #  - entity: script.photo_reolink_telegram
+        #  - entity: script.video_reolink_telegram

@@ -1,0 +1,40 @@
+light_on_gw:
+  alias: light on gw
+  sequence:
+    - service: light.turn_on
+      entity_id: light.gateway_light
+      data:
+        brightness: 255
+        rgb_color: [230, 255, 255]
+        # transition: 8
+        # color_name: red
+    - service: script.notify_test
+      data:
+        message: Включили свет на шлюзе (скрипт)
+
+light_off_gw:
+  alias: light off gw
+  sequence:
+    - service: light.turn_off
+      entity_id: light.gateway_light
+    - service: script.notify_test
+      data:
+        message: Выключили свет на шлюзе (скрипт)
+
+
+
+
+
+
+# с заданной яркостью и рандомным цветом
+#    - service: light.turn_on
+#      entity_id: light.xxx
+#      data_template:
+#        brightness_pct: 15
+#        rgb_color: ['{{ (range(0, 255)|random) }}','{{ (range(0, 255)|random) }}','{{ (range(0, 255)|random) }}']
+#  # 
+# с предустановленным эффектом
+#    - service: light.turn_on
+#      entity_id: light.xxx
+#      data_template:
+#        effect: Strobe epilepsy!

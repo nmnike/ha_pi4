@@ -1,0 +1,120 @@
+# Включаем свет на шлюзе по ДД
+- alias: 03_light_gw_on
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_lobby
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.door_entry
+      to: 'on'  
+  condition:
+    - condition: state
+      entity_id: light.gateway_light
+      state: 'off'
+  action:
+    - service: light.turn_on
+      entity_id: 
+        - light.gateway_light
+      data:
+        brightness: 255
+        rgb_color: [230, 255, 255]
+        # color_name: red
+        # transition: 8
+        # entity_id: 
+        #   - light.gateway_light
+    - service: timer.cancel
+      entity_id: timer.light_gw
+    - service: timer.start
+      entity_id: timer.light_gw
+    # - service: script.notify_test
+    #   data:
+    #     message: Включаем свет на шлюзе по ДД
+
+
+## Обновление Таймера освещения 
+- alias: 03_light_gw_on_timer_reload
+  initial_state: true
+  trigger:
+# Датчик движения
+    # - platform: state
+    #   entity_id: binary_sensor.motion_sensor_lobby
+    #   to: 'on'
+  - platform: event
+    event_type: xiaomi_aqara.motion
+    event_data:
+      entity_id: binary_sensor.motion_sensor_lobby
+  condition:
+    - condition: state
+      entity_id: light.gateway_light
+      state: 'on'
+  action:
+  - service: timer.cancel
+    entity_id: timer.light_gw
+  - service: timer.start
+    entity_id: timer.light_gw
+  #- service: script.notify_test
+  #  data:
+  #    message: Обновление таймера  
+
+# Сброс таймера при выключении
+- alias: 03_light_gw_on_timer_off
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: light.gateway_light
+    to: 'off'
+  action:
+  - service: timer.cancel
+    entity_id: timer.light_gw
+
+ # Старт таймера при ручном включении 
+- alias: 03_light_gw_on_timer_on
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: light.gateway_light
+    to: 'on'
+  action:
+  - service: timer.cancel
+    entity_id: timer.light_gw
+  - service: timer.start
+    entity_id: timer.light_gw  
+
+
+# Выключаем свет на шлюзе, если нет движений
+- alias: 03_light_gw_off
+  trigger:
+    # Таймер
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.light_gw
+    ## ДД выключен 5 минут
+    # - platform: state
+    #   entity_id: binary_sensor.motion_sensor_lobby
+    #   to: 'off'
+    #   for:
+    #     minutes: 5
+  condition:
+    - condition: state
+      entity_id: light.gateway_light
+      state: 'on'
+  action:
+    - service: light.turn_off
+      entity_id: light.gateway_light
+      # data:
+      #   entity_id: 
+      #     - light.gateway_light
+    # - service: script.notify_test
+    #   data:
+    #     message: Выключаем свет на шлюзе, если нет движений
+
+
+  # - service: light.turn_on
+  #     entity_id: light.fridge, light.stove
+  #     data:
+  #       brightness: 255
+  #       rgb_color: [230, 255, 255]
+  #       color_name: red
+  #       transition: 8
+  
