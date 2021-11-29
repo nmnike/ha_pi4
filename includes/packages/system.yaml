@@ -1,0 +1,60 @@
+timer:  # https://www.home-assistant.io/components/timer/
+  
+  light_gw:
+    duration: '00:05:00'
+
+  entrance:
+    duration: '00:05:00'
+
+  humidifier:
+    duration: '01:00:00'    
+
+
+script:
+  
+  initialize_hass:
+    alias: 'Initialize HASS after restart'
+    sequence:
+    - service: script.turn_on
+      entity_id: script.google_backup
+
+  purge_db:
+    sequence:
+      - service: recorder.purge
+        data:
+          keep_days: 2
+          repack: true
+              
+  all_scenario_reload:
+    sequence:
+      - service: automation.reload
+        
+  all_script_reload:
+    sequence:
+      - service: script.reload
+        
+  ha_restart:
+    sequence:
+      - service: homeassistant.restart
+
+  restart_group_ha:
+    sequence:
+      - service: group.reload
+
+  ha_backup:
+    sequence:
+      - service: hassio.snapshot_full
+        data_template:
+          name: ha_backup_{{states('sensor.time_date')}}
+      - delay: 00:20:00
+      - service: rest_command.google_backup
+
+  google_backup:
+    sequence:
+      # - service: rest_command.google_backup
+
+  update_github:
+    sequence:
+    - service: shell_command.update_git
+
+

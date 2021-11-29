@@ -21,4 +21,4 @@
       data:
         message: Открыта входная дверь
     - delay: 00:00:05
-    - service: script.photo_xiaofang2
+    - service: script.telegram_photo_xiaofang_entry

@@ -1,0 +1,34 @@
+title: camera
+icon: mdi:cctv
+
+cards:   
+  
+  - type: picture-glance
+    title: Прихожая
+    camera_image: camera.xiaofang_entry
+    camera_view: live
+    entities:
+      - entity: switch.telegram_photo_xiaofang_entry
+        icon: mdi:camera
+      - entity: switch.telegram_video_xiaofang_entry
+        icon: mdi:video-wireless-outline  
+
+  - type: picture-glance
+    title: Кухня
+    camera_image: camera.xiaofang_kitchen
+    camera_view: live
+    entities:
+      - entity: switch.telegram_photo_xiaofang_kitchen
+        icon: mdi:camera
+      - entity: switch.telegram_video_xiaofang_kitchen
+        icon: mdi:video-wireless-outline
+
+  - type: picture-glance
+    title: Зал
+    camera_image: camera.yinm
+    camera_view: live
+    entities:
+      - entity: switch.telegram_photo_yinm
+        icon: mdi:camera
+      - entity: switch.telegram_video_yinm
+        icon: mdi:video-wireless-outline  

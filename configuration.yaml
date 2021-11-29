@@ -1,3 +1,8 @@
+# !include_dir_list будет возвращать содержимое каталога в виде списка с каждым содержимым файла, являющимся записью в списке.
+# !include_dir_named будет возвращать содержимое каталога в виде словаря, который отображает имя файла => содержимое файла.
+# !include_dir_merge_list вернет содержимое каталога в виде списка, объединив все файлы (которые должны содержать список) в один большой список.
+# !include_dir_merge_named вернет содержимое каталога в качестве словаря, загрузив каждый файл и объединив его в один большой словарь.
+
 homeassistant:
   # Название локации, где запущен этот Hass
   name: Дом
@@ -6,44 +11,18 @@ homeassistant:
   longitude: !secret longitude_home
   elevation: !secret elevation_home
   unit_system: metric
-  time_zone: Europe/Moscow  #http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Moscow  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   
   # Файл кастомизации, в котором можно давать читаемые названия девайсам для отображения в web-интерфейсе
   customize: !include customize.yaml
   packages: !include_dir_named includes/packages
-
+  
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
+system_health:
 
 frontend:
   themes: !include_dir_merge_named themes
 
-system_health:
-
-# lovelace:
-#   mode: yaml
-
-# Text to speech
-tts:
-  - platform: google_translate
-
-
-####################################################
-#                     INCLUDES                     #
-####################################################
-# !include_dir_list будет возвращать содержимое каталога в виде списка с каждым содержимым файла, являющимся записью в списке.
-# !include_dir_named будет возвращать содержимое каталога в виде словаря, который отображает имя файла => содержимое файла.
-# !include_dir_merge_list вернет содержимое каталога в виде списка, объединив все файлы (которые должны содержать список) в один большой список.
-# !include_dir_merge_named вернет содержимое каталога в качестве словаря, загрузив каждый файл и объединив его в один большой словарь.
-
-# recorder: !include includes/recorder.yaml
-notify: !include includes/notify.yaml
-group: !include includes/groups.yaml
-lovelace: !include includes/lovelace.yaml
-
-automation: !include_dir_merge_list includes/automation
-script: !include_dir_merge_named includes/scripts
 sensor: !include_dir_merge_list includes/sensors
-scene: !include includes/scenes.yaml
-
-# battery_state:
+automation: !include_dir_merge_list includes/automation

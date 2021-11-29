@@ -1,9 +1,43 @@
-####################################################
-#                    Custom UI                     #
-####################################################
 # https://github.com/andrey-git/home-assistant-custom-ui
 # https://github.com/andrey-git/home-assistant-customizer/
 
 # customizer:
 #   custom_ui: local
 
+#panel_iframe: # https://www.home-assistant.io/components/panel_iframe/
+  
+  #grafana:
+  #  title: Grafana
+  #  icon: mdi:chart-areaspline
+  #  url: !secret url_grafana
+
+  # influxdb:
+  #   title: InfluxDB
+  #   icon: mdi:chart-areaspline
+  #   url: !secret url_influxdb
+
+  # configurator:
+  #   title: Конфигуратор
+  #   icon: mdi:wrench
+  #   url: !secret url_config
+
+# power_meter:
+#   title: 'PowerMeter'
+#   url: 'http://'
+#   icon: mdi:counter
+
+
+# panel_custom: # https://www.home-assistant.io/components/panel_custom/
+#   - name: floorplan
+#     sidebar_title: Floorplan
+#     sidebar_icon: mdi:floor-plan
+#     url_path: floorplan
+#     config: !include config/floorplan.yaml
+
+#  - name: my-panel
+#     sidebar_title: TodoMVC
+#     sidebar_icon: mdi:work
+#     url_path: my-todomvc
+#     js_url: /local/my-panel.js
+#     config:
+#       who: world

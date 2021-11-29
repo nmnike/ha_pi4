@@ -2,12 +2,14 @@
 # https://materialdesignicons.com/tag/community
 
 title: Умный дом
+
 views:
-  - !include lovelace/home.yaml
-  - !include lovelace/info.yaml
-  - !include lovelace/camera.yaml
-  - !include lovelace/lan.yaml
-  - !include lovelace/control.yaml
-  - !include lovelace/powercount.yaml
-  - !include lovelace/battery.yaml
-  - !include lovelace/develop.yaml
+  - !include includes/lovelace/home.yaml
+  - !include includes/lovelace/info.yaml
+  - !include includes/lovelace/camera.yaml
+  - !include includes/lovelace/lan.yaml
+  - !include includes/lovelace/control.yaml
+  - !include includes/lovelace/powercount.yaml
+  - !include includes/lovelace/battery.yaml
+  - !include includes/lovelace/develop.yaml
+  

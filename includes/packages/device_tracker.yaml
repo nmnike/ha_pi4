@@ -1,9 +1,7 @@
-### DEVICE TRACKER ###
 # https://www.home-assistant.io/components/device_tracker/
 # https://www.home-assistant.io/components/device_tracker.gpslogger/
 # https://www.home-assistant.io/components/device_tracker.bluetooth_tracker/
 
-### ZONE ###
 # https://www.home-assistant.io/components/zone/
 # https://www.home-assistant.io/getting-started/presence-detection/
 

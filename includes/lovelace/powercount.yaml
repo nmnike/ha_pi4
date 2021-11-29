@@ -1,0 +1,71 @@
+title: Потребление электричества
+id: powercount
+icon: mdi:counter
+cards:
+
+  
+  - type: vertical-stack
+    cards:
+    - type: markdown
+      content: >
+          #### Роутер mi-r3g
+    - type: custom:auto-entities
+      show_empty: false
+      card:
+        type: entities
+        show_header_toggle: false
+      filter:
+        include:
+          - entity_id: sensor.plug_2_load
+          - entity_id: sensor.plug_2*money
+          - entity_id: sensor.plug_2*
+        exclude:
+          - entity_id: sensor.*week*
+
+  - type: vertical-stack
+    cards:
+    - type: markdown
+      content: >
+          #### Комп 
+    - type: custom:auto-entities
+      show_empty: false
+      card:
+        type: entities
+        show_header_toggle: false
+      filter:
+        include:
+          - entity_id: sensor.plug_comp_load
+          - entity_id: sensor.plug_comp*money
+          - entity_id: sensor.plug_comp*
+        exclude:
+          - entity_id: sensor.*week*
+  
+  - type: vertical-stack
+    cards:          
+    - type: markdown
+      content: >
+          #### Увлажнитель
+    - type: custom:auto-entities
+      show_empty: false
+      card:
+        type: entities
+        show_header_toggle: false
+      filter:
+        include:
+          - entity_id: sensor.plug_1_load
+          - entity_id: sensor.plug_1*money
+          - entity_id: sensor.plug_1*
+        exclude:
+          - entity_id: sensor.*week*
+
+  - type: vertical-stack # Тарифы
+    cards:
+    - type: markdown
+      content: >
+        #### Тарифы
+    - type: entities
+      entities:
+        - input_number.tariff_elec_allday
+        - input_number.tariff_elec_day
+        - input_number.tariff_elec_night
+

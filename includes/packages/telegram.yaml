@@ -1,7 +1,3 @@
-####################################################
-#                     TELEGRAM                     #
-####################################################
-
 # https://www.home-assistant.io/components/telegram_bot
 
 # Telegram polling - для двустороннего обмена с телегой
@@ -10,14 +6,434 @@
 # https://www.home-assistant.io/components/telegram_bot.broadcast/
 
 telegram_bot:
+    
   - platform: polling
-  # - platform: polling_proxy
-  # - platform: webhooks
     api_key: !secret telegram_bot_apikey
-    # proxy_url: !secret telegram_bot_proxy_url
-    # proxy_params:
-    #   username: !secret telegram_bot_proxy_username
-    #   password: !secret telegram_bot_proxy_password
     allowed_chat_ids:
       - !secret telegram_bot_chat_nm
       - !secret telegram_bot_chat_nm_test
+
+
+# https://www.home-assistant.io/components/notify.telegram/
+notify:
+
+  - name: telegram
+    platform: telegram
+    chat_id: !secret telegram_bot_chat_nm
+
+  - name: telegram2
+    platform: telegram
+    chat_id: !secret telegram_bot_chat_nm_test
+    
+
+automation:
+
+  - id: Клавиатура телеграмм бота
+    alias: telegram_keyboard
+    initial_state: true
+    trigger:
+    - platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/start'
+    action:
+    - service: notify.telegram
+      data:
+        message: 'commands'
+        data:
+          keyboard:
+            - '/photo_entry, /photo_kitchen, /photo_yinm'
+            - '/video_entry, /video_kitchen, /video_yinm'
+            # - '/report, /light'           
+            
+  - id: Запрос на фото из прихожей
+    alias: photo_entry
+    initial_state: true
+    trigger:
+    - platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/photo_entry'
+    action:
+      - service: script.turn_on
+        entity_id: 
+          - script.telegram_photo_xiaofang_entry
+
+  - id: Запрос на фото из кухни
+    alias: photo_kitchen
+    initial_state: true
+    trigger:
+    - platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/photo_kitchen'
+    action:
+      - service: script.turn_on
+        entity_id: 
+          - script.telegram_photo_xiaofang_kitchen
+
+  - id: Запрос на фото из зала
+    alias: photo_yinm
+    initial_state: true
+    trigger:
+    - platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/photo_yinm'
+    action:
+      - service: script.turn_on
+        entity_id: 
+          - script.telegram_photo_yinm
+
+  - id: Запрос на видео из прихожей
+    alias: video_entry
+    initial_state: true
+    trigger:
+    - platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/video_entry'
+    action:
+      - service: script.turn_on
+        entity_id: 
+          - script.telegram_video_xiaofang_entry
+
+  - id: Запрос на видео из кухни
+    alias: video_kitchen
+    initial_state: true
+    trigger:
+    - platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/video_kitchen'
+    action:
+      - service: script.turn_on
+        entity_id: 
+          - script.telegram_video_xiaofang_kitchen
+
+  - id: Запрос на видео из зала
+    alias: video_yinm
+    initial_state: true
+    trigger:
+    - platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/video_yinm'
+    action:
+      - service: script.turn_on
+        entity_id: 
+          - script.telegram_video_yinm        
+
+
+script:
+  
+  notify:
+    alias: notify
+    sequence:
+      service: notify.telegram
+      data_template:
+        title: "{{ title }}"
+        message: "{{as_timestamp(now()) |  timestamp_custom('%d.%m.%Y %H:%M:%S') }}\n{{ message }}"
+
+  notify2:
+    alias: notify2
+    sequence:
+      service: notify.telegram2
+      data_template: 
+        title: "{{ title }}"
+        message: "{{as_timestamp(now()) |  timestamp_custom('%d.%m.%Y %H:%M:%S') }}\n{{ message }}"
+
+# message: >- 
+#         {% if title %} Есть заголовок - {{title}}
+#         {% else %} нет заголовка 
+#         {% endif %}
+
+  
+  
+  # Прихожая
+  photo_xiaofang_entry:
+    sequence:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.xiaofang_entry
+        filename: "/config/www/cam_captures/xiaofang_entry.jpg"
+
+  telegram_photo_xiaofang_entry:
+    sequence:
+      - service: notify.telegram
+        data:
+          message: "Фото прихожей в {{ states('sensor.time_date') }}" 
+      - service: camera.snapshot
+        data:
+            entity_id: camera.xiaofang_entry
+            filename: "/config/www/cam_captures/xiaofang_entry.jpg"
+      - delay: 00:00:03
+      - service: notify.telegram
+        data:
+            title: "Дверь"
+            message: "Фотография" 
+            data:
+                photo:
+                    - file: /config/www/cam_captures/xiaofang_entry.jpg
+
+  telegram_video_xiaofang_entry:
+    sequence:
+    - service: notify.telegram
+      data:
+        message: "Видео прихожей в {{ states('sensor.time_date') }} будет отправлено через минуту" 
+    - service: camera.record
+      data_template:
+        entity_id: camera.xiaofang_entry
+        filename: "/config/www/cam_captures/xiaofang_entry.mp4"
+        duration: 15
+    - delay: 00:00:35
+    - service: notify.telegram
+      data:
+            title: Video
+            message: "Видео" 
+            data:
+                video:
+                  - file: /config/www/cam_captures/xiaofang_entry.mp4
+                    caption: "Видео сделано в {{ states('sensor.time_date') }}" 
+  
+  
+  # Кухня
+  photo_xiaofang_kitchen:
+    sequence:
+      - service: camera.snapshot
+        data:
+            entity_id: camera.xiaofang_kitchen
+            filename: "/config/www/cam_captures/xiaofang_kitchen.jpg"
+  
+  telegram_photo_xiaofang_kitchen:
+    sequence:
+      - service: notify.telegram
+        data:
+          message: "Фото кухни в {{ states('sensor.time_date') }}" 
+      - service: camera.snapshot
+        data:
+            entity_id: camera.xiaofang_kitchen
+            filename: "/config/www/cam_captures/xiaofang_kitchen.jpg"
+      - delay: 00:00:03
+      - service: notify.telegram
+        data:
+            title: "Дверь"
+            message: "Фотография" 
+            data:
+                photo:
+                    - file: /config/www/cam_captures/xiaofang_kitchen.jpg
+
+  video_xiaofang_kitchen:
+    sequence:
+      - service: camera.record
+        data_template:
+          entity_id: camera.xiaofang_kitchen
+          filename: "/config/www/cam_captures/xiaofang_kitchen.mp4"
+          duration: 15
+
+  telegram_video_xiaofang_kitchen:
+    sequence:
+    - service: notify.telegram
+      data:
+        message: "Видео кухни в {{ states('sensor.time_date') }} будет отправлено через минуту" 
+    - service: camera.record
+      data_template:
+        entity_id: camera.xiaofang_kitchen
+        filename: "/config/www/cam_captures/xiaofang_kitchen.mp4"
+        duration: 15
+    - delay: 00:00:35
+    - service: notify.telegram
+      data:
+            title: Video
+            message: "Видео" 
+            data:
+                video:
+                  - file: /config/www/cam_captures/xiaofang_kitchen.mp4
+                    caption: "Видео сделано в {{ states('sensor.time_date') }}"  
+
+  # Зал
+  photo_yinm:
+    sequence:
+      - service: camera.snapshot
+        data:
+            entity_id: camera.yinm
+            filename: "/config/www/cam_captures/yinm.jpg"
+
+  telegram_photo_yinm:
+    sequence:
+      - service: notify.telegram
+        data:
+          message: "Фото зала в {{ states('sensor.time_date') }}" 
+      - service: camera.snapshot
+        data:
+            entity_id: camera.yinm
+            filename: "/config/www/cam_captures/yinm.jpg"
+      - delay: 00:00:03
+      - service: notify.telegram
+        data:
+            title: "Дверь"
+            message: "Фотография" 
+            data:
+                photo:
+                    - file: /config/www/cam_captures/yinm.jpg
+
+  telegram_video_yinm:
+    sequence:
+    - service: notify.telegram
+      data:
+        message: "Видео зала в {{ states('sensor.time_date') }} будет отправлено через минуту" 
+    - service: camera.record
+      data_template:
+        entity_id: camera.yinm
+        filename: "/config/www/cam_captures/yinm.mp4"
+        duration: 15
+    - delay: 00:00:35
+    - service: notify.telegram
+      data:
+            title: Video
+            message: "Видео" 
+            data:
+                video:
+                  - file: /config/www/cam_captures/yinm.mp4
+                    caption: "Видео сделано в {{ states('sensor.time_date') }}"
+
+
+  # photo_xiaofang:
+  #   # alias: notify_photo
+  #   sequence:
+  #     service: notify.telegram
+  #     data_template: 
+  #       message: "Фото с камеры"
+  #       data:
+  #         photo:
+  #           - url: 'http://localhost:8123{{states.camera.XiaoFang2.attributes.entity_picture}}'
+  #             # caption: "{{ caption }}" 
+
+# notify:
+#   alias: notify
+#   sequence:
+#     service: notify.telegram
+#     data_template:
+#       title: "{{ title }}"
+#       message: "{{as_timestamp(now()) |  timestamp_custom('%d.%m.%Y %H:%M:%S') }}\n{{ message }}"
+#         # data:
+#         #   photo:
+#         #     - url: http://ip/image.jpg
+#         #       caption: Фото с камеры  
+
+switch:
+  
+  - platform: template
+    
+    switches:
+      
+      photo_xiaofang_kitchen:
+        friendly_name: "Фото из кухни"
+        value_template: "{{ is_state('script.photo_xiaofang_kitchen', 'on') }}"
+        turn_on:
+          service: script.turn_on
+          data:
+            entity_id: script.photo_xiaofang_kitchen
+        turn_off:
+          service: script.turn_on
+          data:
+            entity_id: script.photo_xiaofang_kitchen
+
+      telegram_photo_xiaofang_kitchen:
+        friendly_name: "Отправить фото из кухни"
+        value_template: "{{ is_state('script.telegram_photo_xiaofang_kitchen', 'on') }}"
+        turn_on:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_photo_xiaofang_kitchen
+        turn_off:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_photo_xiaofang_kitchen 
+
+      telegram_video_xiaofang_kitchen:
+        friendly_name: "Отправить видео из кухни"
+        value_template: "{{ is_state('script.telegram_video_xiaofang_kitchen', 'on') }}"
+        turn_on:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_video_xiaofang_kitchen
+        turn_off:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_video_xiaofang_kitchen 
+      
+      
+      # Прихожая
+      photo_xiaofang_entry:
+        friendly_name: "Фото из прихожей"
+        value_template: "{{ is_state('script.photo_xiaofang_entry', 'on') }}"
+        turn_on:
+          service: script.turn_on
+          data:
+            entity_id: script.photo_xiaofang_entry
+        turn_off:
+          service: script.turn_on
+          data:
+            entity_id: script.photo_xiaofang_entry 
+
+      telegram_photo_xiaofang_entry:
+        friendly_name: "Отправить фото из прихожей"
+        value_template: "{{ is_state('script.telegram_photo_xiaofang_entry', 'on') }}"
+        turn_on:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_photo_xiaofang_entry
+        turn_off:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_photo_xiaofang_entry            
+      
+      telegram_video_xiaofang_entry:
+        friendly_name: "Отправить видео из прихожей"
+        value_template: "{{ is_state('script.telegram_video_xiaofang_entry', 'on') }}"
+        turn_on:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_video_xiaofang_entry
+        turn_off:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_video_xiaofang_entry 
+      
+      # Зал
+      photo_yinm:
+        friendly_name: "Фото из зала"
+        value_template: "{{ is_state('script.photo_yinm', 'on') }}"
+        turn_on:
+          service: script.turn_on
+          data:
+            entity_id: script.photo_yinm
+        turn_off:
+          service: script.turn_on
+          data:
+            entity_id: script.photo_yinm 
+
+      telegram_photo_yinm:
+        friendly_name: "Отправить фото из зала"
+        value_template: "{{ is_state('script.telegram_photo_yinm', 'on') }}"
+        turn_on:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_photo_yinm
+        turn_off:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_photo_yinm 
+
+      telegram_video_yinm:
+        friendly_name: "Отправить видео из прихожей"
+        value_template: "{{ is_state('script.telegram_video_yinm', 'on') }}"
+        turn_on:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_video_yinm
+        turn_off:
+          service: script.turn_on
+          data:
+            entity_id: script.telegram_video_yinm                     

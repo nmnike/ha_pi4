@@ -1,0 +1,52 @@
+sensor:
+  - platform: sql
+    db_url: !secret db_link
+    queries:
+      - name: maria_db_size
+        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 2) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
+        column: 'value'
+        unit_of_measurement: MB
+
+recorder: 
+   db_url: !secret db_link
+   purge_keep_days: 10
+   auto_purge: true
+
+# recorder:
+#   purge_keep_days: 5
+#   purge_interval: 1
+#   include:
+#     domains:
+#       - switch
+#       - light
+#       - vacuum
+#       - sensor
+#       - binary_sensor
+#       - input_select
+#       - input_boolean
+#       - input_datetime
+#       - input_number
+#       - input_text
+#       - lock
+#       - automation
+#       - script
+#       - notify
+#       - python_script
+#       - xiaomi_aqara
+#       - device_tracker
+      
+# exclude:
+  #   domains:
+  #     # - automation
+  #     # - weblink
+  #     # - updater
+  #   entities:
+  #     # - automation.power
+  #     - sensor.sunrise_time
+  #     - sensor.sunset_time
+  #     - sensor.time
+  #     - sensor.date
+  #     - sensor.date__time
+  #     - sensor.online
+  #     - sensor.online_custom
+  #     - sun.sun

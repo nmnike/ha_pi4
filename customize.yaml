@@ -6,6 +6,9 @@
 # https://github.com/andrey-git/home-assistant-custom-ui/blob/master/docs/features.md#template-attributes
 
 
+vacuum.rockrobo_vacuum_v1:
+  friendly_name: mirobot
+  
 binary_sensor.switch_158d00026b7863:
   friendly_name: Кнопка
 
@@ -28,14 +31,22 @@ sensor.illumination_kitchen:
   device_class: illuminance
 
 
-# # LED
-# light.led_living_room:
-#   friendly_name: LED гостиная
-#   icon: mdi:led-strip
+# LED
+light.led_living_room:
+  friendly_name: LED гостиная
+  icon: mdi:led-strip
 
-# light.led_kitchen:
-#   friendly_name: LED кухня
-#   icon: mdi:led-strip  
+light.led_kitchen:
+  friendly_name: LED кухня
+  icon: mdi:led-strip  
+
+light.led_children_room:
+  friendly_name: LED детская
+  icon: mdi:lamp
+
+light.led_bedroom:
+  friendly_name: LED спальня
+  icon: mdi:lamp  
 
 
 # ОКНА И ДВЕРИ
@@ -199,24 +210,12 @@ sensor.battery_cube_main:
 
 
 # # СИСТЕМНАЯ ИНФОРМАЦИЯ
-# sensor.cpu_temperature:
-#  friendly_name: Температура RaspberryPi
-# sensor.latest_version:
-#  friendly_name: Новая версия HA
-# sensor.installed_version:
-#  friendly_name: Установленная версия HA
-# sensor.online_custom:
-#  friendly_name: HA работает
-# sensor.online:
-#  hidden: true
-# sensor.processor_use:
-#  friendly_name: Загрузка процессора
-# # sensor.memory_use_percent:
-# #  friendly_name: Использование памяти
-# # sensor.disk_use_percent_:
-# #  friendly_name: Использование диска
-# # sensor.disk_free_:
-# #  friendly_name: Свободно на диске (Gb)
+# sensor.memory_use_percent:
+#  friendly_name: Использование памяти
+# sensor.disk_use_percent_:
+#  friendly_name: Использование диска
+# sensor.disk_free_:
+#  friendly_name: Свободно на диске (Gb)
 
 # # SPEEDTEST
 # #sensor.speedtest_ping:

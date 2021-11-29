@@ -1,9 +1,4 @@
-####################################################
-#                     BINARY SENSOR                #
-####################################################
-#https://home-assistant.io/components/binary_sensor.ping/
-
-binary_sensor: 
+binary_sensor:  # https://home-assistant.io/components/binary_sensor.ping/
 
 # ROUTER  
   - platform: ping

@@ -1,40 +1,54 @@
-####################################################
-#                     CAMERA                       #
-####################################################
-#https://www.home-assistant.io/components/camera.ffmpeg/
-#https://www.home-assistant.io/components/camera.xiaomi/
-#https://www.home-assistant.io/components/camera.yi/
-#https://www.home-assistant.io/components/camera.generic/
-#https://www.home-assistant.io/components/camera.mjpeg/
-#https://www.home-assistant.io/components/camera.local_file/
+# https://www.home-assistant.io/components/camera.ffmpeg/
+# https://www.home-assistant.io/components/camera.xiaomi/
+# https://www.home-assistant.io/components/camera.yi/
+# https://www.home-assistant.io/components/camera.generic/
+# https://www.home-assistant.io/components/camera.mjpeg/
+# https://www.home-assistant.io/components/camera.local_file/
 
 camera:
-  
-  # кухня
-  - platform: generic
-    name: xiaofang
-    still_image_url: !secret url_xiaofang
-    stream_source: !secret url_xiaofang_rtsp
-    scan_interval: 5
-    # authentication: basic
-    # verify_ssl: false
-    # username: !secret camera_username
-    # password: !secret camera_password_default
- 
-  # прихожая
-  - platform: generic
-    name: xiaofang2
-    still_image_url: !secret url_xiaofang2
-    stream_source: !secret url_xiaofang2_rtsp
-    scan_interval: 5  
 
-  # зал
-  - platform: generic
-    name: yinm
-    still_image_url: !secret url_yinm
-    stream_source: !secret url_yinm_rtsp
-    scan_interval: 5  
+  - platform: ffmpeg
+    name: xiaofang_entry
+    # input: -rtsp_transport tcp -i !secret url_xiaofang_entry_rtsp
+    input: -rtsp_transport tcp -i rtsp://192.168.10.16:8554/unicast
 
+  - platform: ffmpeg
+    name: xiaofang_kitchen
+    # input: -rtsp_transport tcp -i !secret url_xiaofang_kitchen_rtsp
+    input: -rtsp_transport tcp -i rtsp://192.168.10.19/unicast
     
+  - platform: ffmpeg
+    name: yinm
+    input: -rtsp_transport tcp -i rtsp://192.168.10.15/ch0_0.h264     # High res stream
+    # input: -rtsp_transport tcp -i rtsp://192.168.10.15/ch0_1.h264   # Low res stream
 
+  # - platform: generic # прихожая
+  #   name: xiaofang2
+  #   still_image_url: !secret url_xiaofang2
+  #   stream_source: !secret url_xiaofang2_rtsp
+  #   scan_interval: 5
+  #   authentication: basic
+  #   verify_ssl: false
+  #   username: !secret camera_username
+  #   password: !secret camera_password_default
+    
+  # - platform: generic # кухня
+  #   name: xiaofang
+  #   still_image_url: !secret url_xiaofang
+  #   stream_source: !secret url_xiaofang_rtsp
+  #   scan_interval: 5
+  #   authentication: basic
+  #   verify_ssl: false
+  #   username: !secret camera_username
+  #   password: !secret camera_password_default
+ 
+  # - platform: generic # зал
+  #   name: yinm
+  #   still_image_url: !secret url_yinm
+  #   stream_source: !secret url_yinm_rtsp
+  #   scan_interval: 5
+  #   authentication: basic
+  #   verify_ssl: false
+  #   username: !secret camera_username
+  #   password: !secret camera_password_default
     

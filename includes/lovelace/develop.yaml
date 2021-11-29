@@ -1,0 +1,138 @@
+title: Разработка
+id: Developer
+icon: mdi:developer-board
+cards:
+
+  - type: vertical-stack
+    cards:
+
+    # - type: glance
+    #   # title: Семья
+    #   show_state: true
+    #   entities:
+    #     - entity: device_tracker.94652d356dd1
+    #     - entity: device_tracker.102ab37e5d00
+    #     - entity: device_tracker.b4f0ab0a0b12
+
+    # - type: markdown
+    #   content: >
+    #       #### GIT
+    
+    # - type: entities
+    #   show_header_toggle: false
+    #   entities:
+    #     - input_text.commit_text
+    #     - entity: script.update_github
+    #       tap_action: 
+    #         action: toggle
+    #       name: Закомитить
+    #       icon: mdi:github-circle
+    
+    - type: markdown
+      content: >
+          #### ТЕСТ
+
+    - type: entities
+      # title: Настройки
+      show_header_toggle: false
+      entities:
+        - input_select.development
+        - input_select.log_level
+        - input_boolean.tv
+        - input_number.volume
+    
+    - type: markdown
+      content: >
+          #### Скрипты
+    - type: custom:auto-entities
+      show_empty: false
+      card:
+        type: entities
+        show_header_toggle: false
+      filter:
+        include:
+          - entity_id: script.*
+    
+  - type: vertical-stack
+    cards:      
+
+    - type: markdown
+      content: >
+          #### Автоматизация
+    - type: custom:auto-entities
+      show_empty: false
+      card:
+        type: entities
+        show_header_toggle: false
+      filter:
+        include:
+          - entity_id: automation.*
+        exclude:
+          - entity_id: automation.00_power*
+          # - state: 'off'
+
+
+  # Ссылки
+  - type: custom:vertical-stack-in-card
+    cards:
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: weblink
+              name: Check
+              url: !secret url_config_check
+              icon: mdi:backup-restore
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: weblink
+              name: Config
+              url: !secret url_config_local
+              icon: mdi:settings
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: weblink
+              name: ha.io
+              url: https://www.home-assistant.io/
+              icon: mdi:home-assistant 
+      #   - type: entities
+      #     show_header_toggle: false
+      #     entities:
+      #       - type: weblink
+      #         name: Grafana
+      #         url: !secret url_grafana_local
+      #         icon: mdi:graphql
+      #   - type: entities
+      #     show_header_toggle: false
+      #     entities:
+      #       - type: weblink
+      #         name: InfluxDB
+      #         url: !secret url_influxdb_local
+      #         icon: mdi:database
+        
+    - type: horizontal-stack
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: weblink
+              name: ZTE
+              url: !secret url_zte
+              icon: mdi:router-wireless
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: weblink
+              name: Mi-r3g
+              url: !secret url_mi-r3g
+              icon: mdi:router-wireless
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: weblink
+              name: Transm
+              url: !secret url_transmission
+              icon: mdi:download 
